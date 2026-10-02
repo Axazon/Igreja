@@ -1,0 +1,4211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Igreja Peregrinos do Evangelho — Uma igreja reformada sempre se reformando.">
+    <title>Igreja Peregrinos do Evangelho</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --cor-fundo: #000000; /* Cor reutilizada pelos elementos que usam esta variável. */
+            --cor-fundo-2: #080808; /* Cor reutilizada pelos elementos que usam esta variável. */
+            --cor-card: rgba(12, 12, 12, 0.94); /* Cor reutilizada pelos elementos que usam esta variável. */
+            --cor-bege: #9b7653; /* Cor reutilizada pelos elementos que usam esta variável. */
+            --cor-bege-claro: #c5a27d; /* Cor reutilizada pelos elementos que usam esta variável. */
+            --cor-texto: #f5f5f5; /* Cor reutilizada pelos elementos que usam esta variável. */
+            --cor-texto-secundario: #cfcfcf; /* Cor reutilizada pelos elementos que usam esta variável. */
+            --cor-branco: #ffffff; /* Cor reutilizada pelos elementos que usam esta variável. */
+            --neon-branco: drop-shadow(0 0 10px rgba(255,255,255,.9)) drop-shadow(0 0 25px rgba(255,255,255,.7)) drop-shadow(0 0 45px rgba(255,255,255,.35)); /* Brilho neon reutilizado pelos elementos que usam esta variável. */
+            --neon-bege: 0 0 10px rgba(155,118,83,.7), 0 0 25px rgba(155,118,83,.35); /* Brilho neon reutilizado pelos elementos que usam esta variável. */
+            --neon-botao: 0 0 15px #fff, inset 0 0 10px rgba(255,255,255,.5); /* Brilho neon reutilizado pelos elementos que usam esta variável. */
+            --tempo-slide: 20s; /* Duração visual da barra de progresso dos slides. */
+        }
+
+        * {
+            box-sizing: border-box; /* Altera a inclusão de bordas e espaços no cálculo de tamanho. */
+            margin: 0; /* Altera o espaço externo. */
+            padding: 0; /* Altera o espaço interno. */
+        }
+
+        html {
+            scroll-behavior: smooth; /* Altera a suavidade da rolagem. */
+        }
+
+        body {
+            background: radial-gradient(circle at 50% 0%, rgba(155,118,83,.10), transparent 35%), #000; /* Altera o fundo (cor, imagem ou degradê). */
+            color: var(--cor-texto); /* Altera a cor do texto. */
+            font-family: 'Montserrat', sans-serif; /* Altera a família tipográfica. */
+            overflow-x: scroll; /* Altera o recorte ou a rolagem horizontal. */
+        }
+
+        body.modal-aberto {
+            overflow: hidden; /* Altera o recorte ou a rolagem do conteúdo. */
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Cinzel', serif; /* Altera a família tipográfica. */
+            color: var(--cor-bege); /* Altera a cor do texto. */
+            text-align: center; /* Altera o alinhamento horizontal do texto. */
+        }
+
+        button, a {
+            -webkit-tap-highlight-color: transparent; /* Ajusta -webkit-tap-highlight-color nos elementos desta regra. */
+        }
+
+        #particulas {
+            position: fixed; /* Altera o sistema de posicionamento. */
+            inset: 0; /* Altera as distâncias em todas as bordas. */
+            width: 100%; /* Altera a largura. */
+            height: 100%; /* Altera a altura. */
+            z-index: -3; /* Altera a ordem de sobreposição. */
+            pointer-events: none; /* Altera a recepção de cliques e movimentos do ponteiro. */
+            opacity: .65; /* Altera a transparência. */
+        }
+
+        .luz-fundo {
+            position: fixed; /* Altera o sistema de posicionamento. */
+            width: 500px; /* Altera a largura. */
+            height: 500px; /* Altera a altura. */
+            border-radius: 50%; /* Altera o arredondamento dos cantos. */
+            background: radial-gradient(circle, rgba(155,118,83,.12), transparent 70%); /* Altera o fundo (cor, imagem ou degradê). */
+            pointer-events: none; /* Altera a recepção de cliques e movimentos do ponteiro. */
+            z-index: -2; /* Altera a ordem de sobreposição. */
+            animation: luzMovimento 12s ease-in-out infinite alternate; /* Altera a animação aplicada e sua duração/repetição. */
+        }
+
+        @keyframes luzMovimento { /* Define os movimentos usados por esta animação. */
+            0% {
+                transform: translate(-20%, -20%) scale(1); /* Altera a transformação de posição, escala ou rotação. */
+            }
+            100% {
+                transform: translate(100%, 50%) scale(1.4); /* Altera a transformação de posição, escala ou rotação. */
+            }
+        }
+
+        #splash-screen {
+            position: fixed; /* Altera o sistema de posicionamento. */
+            inset: 0; /* Altera as distâncias em todas as bordas. */
+            width: 100vw; /* Altera a largura. */
+            height: 100vh; /* Altera a altura. */
+            background-color: #000; /* Altera a cor de fundo. */
+            z-index: 99999; /* Altera a ordem de sobreposição. */
+            display: flex; /* Altera o modo de exibição e organização dos elementos. */
+            justify-content: center; /* Altera a distribuição dos itens no eixo principal. */
+            align-items: center; /* Altera o alinhamento dos itens no eixo transversal. */
+            overflow: hidden; /* Altera o recorte ou a rolagem do conteúdo. */
+            transition: opacity 1.5s ease, visibility 1.5s ease; /* Altera a duração e suavidade das mudanças visuais. */
+        }
+
+        #splash-video {
+            width: 100%; /* Altera a largura. */
+            height: 100%; /* Altera a altura. */
+            object-fit: contain; /* Altera o enquadramento de imagens e vídeos. */
+            background-color: #000; /* Altera a cor de fundo. */
+        }
+
+        .menu-superior {
+            position: fixed; /* Altera o sistema de posicionamento. */
+            top: 0; /* Altera a distância superior. */
+            left: 0; /* Altera a distância à esquerda. */
+            width: 100%; /* Altera a largura. */
+            z-index: 9000; /* Altera a ordem de sobreposição. */
+            padding: 25px 25px; /* Altera o espaço interno. */
+            display: flex; /* Altera o modo de exibição e organização dos elementos. */
+            align-items: justify; /* Altera o alinhamento dos itens no eixo transversal. */
+            justify-content: justify; /* Altera a distribuição dos itens no eixo principal. */
+            background: rgba(0,0,0,.72); /* Altera o fundo (cor, imagem ou degradê). */
+            backdrop-filter: blur(15px); /* Altera os efeitos no fundo atrás do elemento. */
+            border-bottom: 1px solid rgba(155,118,83,.25); /* Altera o detalhe indicado da borda. */
+        }
+
+        .menu-interno {
+            width: 100%; /* Altera a largura. */
+            max-width: 1250px; /* Altera a largura máxima. */
+            display: flex; /* Altera o modo de exibição e organização dos elementos. */
+            align-items: center; /* Altera o alinhamento dos itens no eixo transversal. */
+            justify-content: space-between; /* Altera a distribuição dos itens no eixo principal. */
+        }
+
+        .marca-menu {
+            color: var(--cor-bege); /* Altera a cor do texto. */
+            font-family: 'Cinzel', serif; /* Altera a família tipográfica. */
+            font-size: 1.05rem; /* Altera o tamanho das letras. */
+            letter-spacing: 2px; /* Altera o espaço entre letras. */
+            text-decoration: none; /* Altera a decoração do texto. */
+            white-space: nowrap; /* Altera a preservação de espaços e quebras de linha. */
+        }
+
+        .links-menu {
+            display: flex; /* Altera o modo de exibição e organização dos elementos. */
+            gap: 8px; /* Altera a distância entre itens. */
+            align-items: center; /* Altera o alinhamento dos itens no eixo transversal. */
+        }
+
+        .links-menu button {
+            background: transparent; /* Altera o fundo (cor, imagem ou degradê). */
+            border: 1px solid transparent; /* Altera o contorno. */
+            color: #ddd; /* Altera a cor do texto. */
+            padding: 9px 13px; /* Altera o espaço interno. */
+            border-radius: 7px; /* Altera o arredondamento dos cantos. */
+            cursor: pointer; /* Altera o cursor do mouse. */
+            font-family: 'Montserrat', sans-serif; /* Altera a família tipográfica. */
+            font-size: .76rem; /* Altera o tamanho das letras. */
+            font-weight: 600; /* Altera a espessura das letras. */
+            transition: .3s; /* Altera a duração e suavidade das mudanças visuais. */
+        }
+
+        .links-menu button:hover {
+            color: #fff; /* Altera a cor do texto. */
+            border-color: var(--cor-bege); /* Altera o detalhe indicado da borda. */
+            box-shadow: var(--neon-bege); /* Altera a sombra ou brilho da caixa. */
+        }
+
+        .menu-mobile-btn {
+            display: none; /* Altera o modo de exibição e organização dos elementos. */
+            background: transparent; /* Altera o fundo (cor, imagem ou degradê). */
+            color: white; /* Altera a cor do texto. */
+            border: 1px solid var(--cor-bege); /* Altera o contorno. */
+            border-radius: 7px; /* Altera o arredondamento dos cantos. */
+            padding: 8px 12px; /* Altera o espaço interno. */
+            cursor: pointer; /* Altera o cursor do mouse. */
+            font-size: 1.2rem; /* Altera o tamanho das letras. */
+        }
+
+        .menu-mobile {
+            display: none; /* Altera o modo de exibição e organização dos elementos. */
+            position: fixed; /* Altera o sistema de posicionamento. */
+            top: 70px; /* Altera a distância superior. */
+            right: 15px; /* Altera a distância à direita. */
+            width: min(280px, calc(100vw - 30px)); /* Altera a largura. */
+            background: rgba(8,8,8,.97); /* Altera o fundo (cor, imagem ou degradê). */
+            border: 1px solid var(--cor-bege); /* Altera o contorno. */
+            border-radius: 15px; /* Altera o arredondamento dos cantos. */
+            padding: 15px; /* Altera o espaço interno. */
+            z-index: 8999; /* Altera a ordem de sobreposição. */
+            box-shadow: 0 15px 50px rgba(0,0,0,.8); /* Altera a sombra ou brilho da caixa. */
+        }
+
+        .menu-mobile.aberto {
+            display: block; /* Altera o modo de exibição e organização dos elementos. */
+            animation: menuEntrada .4s ease; /* Altera a animação aplicada e sua duração/repetição. */
+        }
+
+        .menu-mobile button {
+            display: block; /* Altera o modo de exibição e organização dos elementos. */
+            width: 100%; /* Altera a largura. */
+            padding: 13px; /* Altera o espaço interno. */
+            margin: 5px 0; /* Altera o espaço externo. */
+            background: transparent; /* Altera o fundo (cor, imagem ou degradê). */
+            color: #fff; /* Altera a cor do texto. */
+            border: 1px solid rgba(155,118,83,.35); /* Altera o contorno. */
+            border-radius: 7px; /* Altera o arredondamento dos cantos. */
+            text-align: left; /* Altera o alinhamento horizontal do texto. */
+            cursor: pointer; /* Altera o cursor do mouse. */
+        }
+
+        @keyframes menuEntrada { /* Define os movimentos usados por esta animação. */
+            from {
+                opacity: 0; /* Altera a transparência. */
+                transform: translateY(-15px) scale(.95); /* Altera a transformação de posição, escala ou rotação. */
+            }
+            to {
+                opacity: 1; /* Altera a transparência. */
+                transform: translateY(0) scale(1); /* Altera a transformação de posição, escala ou rotação. */
+            }
+        }
+
+        .container-principal {
+            max-width: 1100px; /* Altera a largura máxima. */
+            margin: 0 auto; /* Altera o espaço externo. */
+            padding: 125px 20px 0; /* Altera o espaço interno. */
+            display: flex; /* Altera o modo de exibição e organização dos elementos. */
+            flex-direction: column; /* Altera a direção de organização dos itens. */
+            align-items: center; /* Altera o alinhamento dos itens no eixo transversal. */
+        }
+
+        .logotipo {
+            max-width: 200px; /* Altera a largura máxima. */
+            margin-bottom: 20px; /* Altera o espaço externo na direção indicada. */
+            border-radius: 50%; /* Altera o arredondamento dos cantos. */
+            border: 2px solid var(--cor-bege); /* Altera o contorno. */
+            animation: fadeIn 2s ease-in; /* Altera a animação aplicada e sua duração/repetição. */
+        }
+
+        .titulo-principal {
+            font-size: clamp(2rem, 5vw, 3.4rem); /* Altera o tamanho das letras. */
+            letter-spacing: 4px; /* Altera o espaço entre letras. */
+            text-shadow: 0 0 20px rgba(155,118,83,.25); /* Altera o brilho ou sombra do texto. */
+        }
+
+        .subtitulo-principal {
+            margin-top: 15px; /* Altera o espaço externo na direção indicada. */
+            color: #aaa; /* Altera a cor do texto. */
+            font-size: .95rem; /* Altera o tamanho das letras. */
+            letter-spacing: 3px; /* Altera o espaço entre letras. */
+            text-align: center; /* Altera o alinhamento horizontal do texto. */
+        }
+
+        .container-cruz {
+            perspective: 1000px; /* Ajusta perspective nos elementos desta regra. */
+            margin: 55px 0; /* Altera o espaço externo. */
+            width: 100%; /* Altera a largura. */
+            display: flex; /* Altera o modo de exibição e organização dos elementos. */
+            justify-content: center; /* Altera a distribuição dos itens no eixo principal. */
+            position: relative; /* Altera o sistema de posicionamento. */
+        }
+
+        .container-cruz::before {
+            content: ""; /* Altera o conteúdo visual de um pseudo-elemento. */
+            position: absolute; /* Altera o sistema de posicionamento. */
+            width: 260px; /* Altera a largura. */
+            height: 260px; /* Altera a altura. */
+            border-radius: 50%; /* Altera o arredondamento dos cantos. */
+            background: radial-gradient(circle, rgba(255,255,255,.15), transparent 70%); /* Altera o fundo (cor, imagem ou degradê). */
+            filter: blur(15px); /* Altera os efeitos visuais aplicados. */
+            animation: pulsarLuz 4s ease-in-out infinite; /* Altera a animação aplicada e sua duração/repetição. */
+        }
+
+        .cruz-3d {
+            width: 250px; /* Altera a largura. */
+            max-width: 80%; /* Altera a largura máxima. */
+            filter: var(--neon-branco); /* Altera os efeitos visuais aplicados. */
+            animation: rotacao3D 10s infinite linear; /* Altera a animação aplicada e sua duração/repetição. */
+            transform-style: preserve-3d; /* Ajusta transform-style nos elementos desta regra. */
+            position: relative; /* Altera o sistema de posicionamento. */
+            z-index: 1; /* Altera a ordem de sobreposição. */
+        }
+
+        @keyframes rotacao3D { /* Define os movimentos usados por esta animação. */
+            0% {
+                transform: rotateY(0deg) rotateX(5deg); /* Altera a transformação de posição, escala ou rotação. */
+            }
+            50% {
+                transform: rotateY(180deg) rotateX(5deg); /* Altera a transformação de posição, escala ou rotação. */
+            }
+            100% {
+                transform: rotateY(360deg) rotateX(5deg); /* Altera a transformação de posição, escala ou rotação. */
+            }
+        }
+
+        @keyframes pulsarLuz { /* Define os movimentos usados por esta animação. */
+            0%,100% {
+                transform: scale(.85); /* Altera a transformação de posição, escala ou rotação. */
+                opacity: .5; /* Altera a transparência. */
+            }
+            50% {
+                transform: scale(1.15); /* Altera a transformação de posição, escala ou rotação. */
+                opacity: 1; /* Altera a transparência. */
+            }
+        }
+
+        .sobre-nos {
+            width: 100%; /* Altera a largura. */
+            background: linear-gradient(180deg, rgba(20,20,20,.95), rgba(0,0,0,.95)); /* Altera o fundo (cor, imagem ou degradê). */
+            border: 1px solid var(--cor-bege); /* Altera o contorno. */
+            border-radius: 15px; /* Altera o arredondamento dos cantos. */
+            padding: 40px 30px; /* Altera o espaço interno. */
+            margin-top: 20px; /* Altera o espaço externo na direção indicada. */
+            opacity: 0; /* Altera a transparência. */
+            transform: translateY(30px); /* Altera a transformação de posição, escala ou rotação. */
+            transition: opacity 1.5s ease-out, transform 1.5s ease-out; /* Altera a duração e suavidade das mudanças visuais. */
+            box-shadow: 0 20px 60px rgba(0,0,0,.5); /* Altera a sombra ou brilho da caixa. */
+        }
+
+        .sobre-nos.ativo {
+            opacity: 1; /* Altera a transparência. */
+            transform: translateY(0); /* Altera a transformação de posição, escala ou rotação. */
+        }
+
+        .sobre-nos-titulo {
+            font-size: 2rem; /* Altera o tamanho das letras. */
+            margin-bottom: 30px; /* Altera o espaço externo na direção indicada. */
+            letter-spacing: 2px; /* Altera o espaço entre letras. */
+        }
+
+        .sobre-nos-texto {
+            font-size: 1.1rem; /* Altera o tamanho das letras. */
+            line-height: 1.8; /* Altera o espaço entre linhas de texto. */
+            margin-bottom: 20px; /* Altera o espaço externo na direção indicada. */
+            text-align: center; /* Altera o alinhamento horizontal do texto. */
+            color: #ddd; /* Altera a cor do texto. */
+        }
+
+        .sobre-nos-lista {
+            list-style: none; /* Altera os marcadores de lista. */
+            margin: 30px 0; /* Altera o espaço externo. */
+            text-align: justify; /* Altera o alinhamento horizontal do texto. */
+            padding-left: 40px; /* Altera o espaço interno na direção indicada. */
+        }
+
+        .sobre-nos-lista li {
+            font-size: 1.2rem; /* Altera o tamanho das letras. */
+            font-weight: 600; /* Altera a espessura das letras. */
+            color: var(--cor-bege); /* Altera a cor do texto. */
+            margin: 10px 0; /* Altera o espaço externo. */
+            letter-spacing: 1px; /* Altera o espaço entre letras. */
+            transition: .3s; /* Altera a duração e suavidade das mudanças visuais. */
+        }
+
+        .sobre-nos-lista li:hover {
+            transform: scale(1.04); /* Altera a transformação de posição, escala ou rotação. */
+            text-shadow: 0 0 15px rgba(155,118,83,.7); /* Altera o brilho ou sombra do texto. */
+        }
+
+        .sobre-nos-rodape {
+            text-align: center; /* Altera o alinhamento horizontal do texto. */
+            font-style: italic; /* Altera o estilo da fonte. */
+            margin-top: 30px; /* Altera o espaço externo na direção indicada. */
+            border-top: 1px solid var(--cor-bege); /* Altera o detalhe indicado da borda. */
+            padding-top: 20px; /* Altera o espaço interno na direção indicada. */
+            color: #ccc; /* Altera a cor do texto. */
+        }
+
+        .nova-secao {
+            width: 100%; /* Altera a largura. */
+            margin-top: 90px; /* Altera o espaço externo na direção indicada. */
+            padding: 50px 25px; /* Altera o espaço interno. */
+            position: relative; /* Altera o sistema de posicionamento. */
+            border-radius: 20px; /* Altera o arredondamento dos cantos. */
+            border: 1px solid rgba(155,118,83,.5); /* Altera o contorno. */
+            background: linear-gradient(145deg, rgba(20,20,20,.94), rgba(3,3,3,.96)); /* Altera o fundo (cor, imagem ou degradê). */
+            box-shadow: 0 20px 70px rgba(0,0,0,.45), inset 0 0 40px rgba(155,118,83,.025); /* Altera a sombra ou brilho da caixa. */
+            overflow: hidden; /* Altera o recorte ou a rolagem do conteúdo. */
+        }
+
+        .nova-secao::before {
+            content: ""; /* Altera o conteúdo visual de um pseudo-elemento. */
+            position: absolute; /* Altera o sistema de posicionamento. */
+            top: -100px; /* Altera a distância superior. */
+            right: -100px; /* Altera a distância à direita. */
+            width: 250px; /* Altera a largura. */
+            height: 250px; /* Altera a altura. */
+            border-radius: 50%; /* Altera o arredondamento dos cantos. */
+            background: radial-gradient(circle, rgba(155,118,83,.12), transparent 70%); /* Altera o fundo (cor, imagem ou degradê). */
+        }
+
+        .titulo-secao {
+            font-size: clamp(1.8rem, 4vw, 2.5rem); /* Altera o tamanho das letras. */
+            margin-bottom: 15px; /* Altera o espaço externo na direção indicada. */
+            letter-spacing: 2px; /* Altera o espaço entre letras. */
+        }
+
+        .descricao-secao {
+            text-align: center; /* Altera o alinhamento horizontal do texto. */
+            max-width: 800px; /* Altera a largura máxima. */
+            margin: 0 auto 40px; /* Altera o espaço externo. */
+            color: #ccc; /* Altera a cor do texto. */
+            line-height: 1.8; /* Altera o espaço entre linhas de texto. */
+        }
+
+        .container-botoes {
+            display: flex; /* Altera o modo de exibição e organização dos elementos. */
+            flex-direction: column; /* Altera a direção de organização dos itens. */
+            align-items: center; /* Altera o alinhamento dos itens no eixo transversal. */
+            gap: 20px; /* Altera a distância entre itens. */
+            margin-top: 50px; /* Altera o espaço externo na direção indicada. */
+            margin-bottom: 50px; /* Altera o espaço externo na direção indicada. */
+            width: 100%; /* Altera a largura. */
+        }
+
+        .linha-botoes {
+            display: flex; /* Altera o modo de exibição e organização dos elementos. */
+            gap: 20px; /* Altera a distância entre itens. */
+            flex-wrap: wrap; /* Altera a quebra dos itens em novas linhas. */
+            justify-content: center; /* Altera a distribuição dos itens no eixo principal. */
+        }
+
+        .botao-neon {
+            background-color: transparent; /* Altera a cor de fundo. */
+            color: #fff; /* Altera a cor do texto. */
+            border: 2px solid #fff; /* Altera o contorno. */
+            padding: 15px 40px; /* Altera o espaço interno. */
+            font-size: 1.2rem; /* Altera o tamanho das letras. */
+            font-family: 'Cinzel', serif; /* Altera a família tipográfica. */
+            font-weight: bold; /* Altera a espessura das letras. */
+            text-transform: uppercase; /* Altera a transformação visual de maiúsculas/minúsculas. */
+            cursor: pointer; /* Altera o cursor do mouse. */
+            border-radius: 8px; /* Altera o arredondamento dos cantos. */
+            box-shadow: var(--neon-botao); /* Altera a sombra ou brilho da caixa. */
+            transition: all .3s ease; /* Altera a duração e suavidade das mudanças visuais. */
+            text-shadow: 0 0 5px #fff; /* Altera o brilho ou sombra do texto. */
+            position: relative; /* Altera o sistema de posicionamento. */
+            overflow: hidden; /* Altera o recorte ou a rolagem do conteúdo. */
+        }
+
+        .botao-neon::before {
+            content: ""; /* Altera o conteúdo visual de um pseudo-elemento. */
+            position: absolute; /* Altera o sistema de posicionamento. */
+            top: 0; /* Altera a distância superior. */
+            left: -100%; /* Altera a distância à esquerda. */
+            width: 100%; /* Altera a largura. */
+            height: 100%; /* Altera a altura. */
+            background: linear-gradient( 90deg, transparent, rgba(255,255,255,.25), transparent ); /* Altera o fundo (cor, imagem ou degradê). */
+            transition: .6s; /* Altera a duração e suavidade das mudanças visuais. */
+        }
+
+        .botao-neon:hover::before {
+            left: 100%; /* Altera a distância à esquerda. */
+        }
+
+        .botao-neon:hover {
+            background-color: #fff; /* Altera a cor de fundo. */
+            color: #000; /* Altera a cor do texto. */
+            box-shadow: 0 0 25px #fff, inset 0 0 20px #ccc; /* Altera a sombra ou brilho da caixa. */
+            transform: translateY(-3px); /* Altera a transformação de posição, escala ou rotação. */
+        }
+
+        .grade-experiencias {
+            display: grid; /* Altera o modo de exibição e organização dos elementos. */
+            grid-template-columns: repeat(3, 1fr); /* Altera a quantidade e largura das colunas. */
+            gap: 18px; /* Altera a distância entre itens. */
+            width: 100%; /* Altera a largura. */
+        }
+
+        .card-experiencia {
+            min-height: 180px; /* Altera a altura mínima. */
+            border: 1px solid rgba(155,118,83,.55); /* Altera o contorno. */
+            border-radius: 15px; /* Altera o arredondamento dos cantos. */
+            padding: 25px 18px; /* Altera o espaço interno. */
+            background: linear-gradient(145deg, rgba(25,25,25,.9), rgba(5,5,5,.95)); /* Altera o fundo (cor, imagem ou degradê). */
+            cursor: pointer; /* Altera o cursor do mouse. */
+            transition: .4s; /* Altera a duração e suavidade das mudanças visuais. */
+            display: flex; /* Altera o modo de exibição e organização dos elementos. */
+            flex-direction: column; /* Altera a direção de organização dos itens. */
+            align-items: center; /* Altera o alinhamento dos itens no eixo transversal. */
+            justify-content: center; /* Altera a distribuição dos itens no eixo principal. */
+            text-align: center; /* Altera o alinhamento horizontal do texto. */
+            position: relative; /* Altera o sistema de posicionamento. */
+            overflow: hidden; /* Altera o recorte ou a rolagem do conteúdo. */
+        }
+
+        .card-experiencia::after {
+            content: ""; /* Altera o conteúdo visual de um pseudo-elemento. */
+            position: absolute; /* Altera o sistema de posicionamento. */
+            width: 120px; /* Altera a largura. */
+            height: 120px; /* Altera a altura. */
+            border-radius: 50%; /* Altera o arredondamento dos cantos. */
+            background: rgba(155,118,83,.08); /* Altera o fundo (cor, imagem ou degradê). */
+            filter: blur(20px); /* Altera os efeitos visuais aplicados. */
+            transition: .5s; /* Altera a duração e suavidade das mudanças visuais. */
+        }
+
+        .card-experiencia:hover {
+            transform: translateY(-8px) scale(1.02); /* Altera a transformação de posição, escala ou rotação. */
+            border-color: #fff; /* Altera o detalhe indicado da borda. */
+            box-shadow: 0 15px 40px rgba(0,0,0,.7), 0 0 25px rgba(155,118,83,.25); /* Altera a sombra ou brilho da caixa. */
+        }
+
+        .card-experiencia:hover::after {
+            transform: scale(2); /* Altera a transformação de posição, escala ou rotação. */
+        }
+
+        .icone-experiencia {
+            font-size: 2.5rem; /* Altera o tamanho das letras. */
+            margin-bottom: 15px; /* Altera o espaço externo na direção indicada. */
+            position: relative; /* Altera o sistema de posicionamento. */
+            z-index: 1; /* Altera a ordem de sobreposição. */
+            filter: drop-shadow(0 0 10px rgba(255,255,255,.5)); /* Altera os efeitos visuais aplicados. */
+        }
+
+        .card-experiencia h3 {
+            font-size: 1.2rem; /* Altera o tamanho das letras. */
+            margin-bottom: 10px; /* Altera o espaço externo na direção indicada. */
+            position: relative; /* Altera o sistema de posicionamento. */
+            z-index: 1; /* Altera a ordem de sobreposição. */
+        }
+
+        .card-experiencia p {
+            color: #aaa; /* Altera a cor do texto. */
+            font-size: .85rem; /* Altera o tamanho das letras. */
+            line-height: 1.5; /* Altera o espaço entre linhas de texto. */
+            position: relative; /* Altera o sistema de posicionamento. */
+            z-index: 1; /* Altera a ordem de sobreposição. */
+        }
+
+        .evangelho-destaque {
+            text-align: center; /* Altera o alinhamento horizontal do texto. */
+            padding: 20px; /* Altera o espaço interno. */
+        }
+
+        .evangelho-frase {
+            font-family: 'Cinzel', serif; /* Altera a família tipográfica. */
+            font-size: clamp(1.5rem, 4vw, 2.6rem); /* Altera o tamanho das letras. */
+            line-height: 1.5; /* Altera o espaço entre linhas de texto. */
+            color: #fff; /* Altera a cor do texto. */
+            margin-bottom: 30px; /* Altera o espaço externo na direção indicada. */
+            text-shadow: 0 0 25px rgba(255,255,255,.18); /* Altera o brilho ou sombra do texto. */
+        }
+
+        .evangelho-frase span {
+            color: var(--cor-bege-claro); /* Altera a cor do texto. */
+        }
+
+        .passos-evangelho {
+            display: grid; /* Altera o modo de exibição e organização dos elementos. */
+            grid-template-columns: repeat(4, 1fr); /* Altera a quantidade e largura das colunas. */
+            gap: 15px; /* Altera a distância entre itens. */
+            margin-top: 35px; /* Altera o espaço externo na direção indicada. */
+        }
+
+        .passo {
+            border-top: 2px solid var(--cor-bege); /* Altera o detalhe indicado da borda. */
+            padding: 25px 15px; /* Altera o espaço interno. */
+        }
+
+        .numero-passo {
+            font-family: 'Cinzel', serif; /* Altera a família tipográfica. */
+            color: var(--cor-bege); /* Altera a cor do texto. */
+            font-size: 2rem; /* Altera o tamanho das letras. */
+            margin-bottom: 10px; /* Altera o espaço externo na direção indicada. */
+        }
+
+        .passo h3 {
+            margin-bottom: 12px; /* Altera o espaço externo na direção indicada. */
+            font-size: 1.05rem; /* Altera o tamanho das letras. */
+        }
+
+        .passo p {
+            color: #bbb; /* Altera a cor do texto. */
+            font-size: .9rem; /* Altera o tamanho das letras. */
+            line-height: 1.6; /* Altera o espaço entre linhas de texto. */
+        }
+
+        .grade-info {
+            display: grid; /* Altera o modo de exibição e organização dos elementos. */
+            grid-template-columns: repeat(2, 1fr); /* Altera a quantidade e largura das colunas. */
+            gap: 20px; /* Altera a distância entre itens. */
+        }
+
+        .bloco-info {
+            border: 1px solid rgba(155,118,83,.4); /* Altera o contorno. */
+            border-radius: 12px; /* Altera o arredondamento dos cantos. */
+            padding: 25px; /* Altera o espaço interno. */
+            background: rgba(0,0,0,.4); /* Altera o fundo (cor, imagem ou degradê). */
+        }
+
+        .bloco-info h3 {
+            text-align: left; /* Altera o alinhamento horizontal do texto. */
+            margin-bottom: 15px; /* Altera o espaço externo na direção indicada. */
+            font-size: 1.25rem; /* Altera o tamanho das letras. */
+        }
+
+        .bloco-info p, .bloco-info li {
+            color: #ccc; /* Altera a cor do texto. */
+            line-height: 1.7; /* Altera o espaço entre linhas de texto. */
+            font-size: .95rem; /* Altera o tamanho das letras. */
+        }
+
+        .bloco-info ul {
+            padding-left: 20px; /* Altera o espaço interno na direção indicada. */
+        }
+
+        .cultos-grid {
+            display: grid; /* Altera o modo de exibição e organização dos elementos. */
+            grid-template-columns: repeat(2, 1fr); /* Altera a quantidade e largura das colunas. */
+            gap: 20px; /* Altera a distância entre itens. */
+            margin-top: 30px; /* Altera o espaço externo na direção indicada. */
+        }
+
+        .culto-card {
+            border: 1px solid var(--cor-bege); /* Altera o contorno. */
+            border-radius: 15px; /* Altera o arredondamento dos cantos. */
+            padding: 30px; /* Altera o espaço interno. */
+            text-align: center; /* Altera o alinhamento horizontal do texto. */
+            background: radial-gradient(circle at center, rgba(155,118,83,.10), transparent 70%); /* Altera o fundo (cor, imagem ou degradê). */
+            transition: .4s; /* Altera a duração e suavidade das mudanças visuais. */
+        }
+
+        .culto-card:hover {
+            transform: translateY(-6px); /* Altera a transformação de posição, escala ou rotação. */
+            box-shadow: var(--neon-bege); /* Altera a sombra ou brilho da caixa. */
+        }
+
+        .culto-dia {
+            font-family: 'Cinzel', serif; /* Altera a família tipográfica. */
+            color: var(--cor-bege); /* Altera a cor do texto. */
+            font-size: 1.5rem; /* Altera o tamanho das letras. */
+            margin-bottom: 12px; /* Altera o espaço externo na direção indicada. */
+        }
+
+        .culto-hora {
+            font-size: 1.8rem; /* Altera o tamanho das letras. */
+            font-weight: 700; /* Altera a espessura das letras. */
+            margin-bottom: 10px; /* Altera o espaço externo na direção indicada. */
+        }
+
+        .culto-card p {
+            color: #bbb; /* Altera a cor do texto. */
+        }
+
+        .formulario {
+            max-width: 750px; /* Altera a largura máxima. */
+            margin: auto; /* Altera o espaço externo. */
+        }
+
+        .campo {
+            margin-bottom: 18px; /* Altera o espaço externo na direção indicada. */
+        }
+
+        .campo label {
+            display: block; /* Altera o modo de exibição e organização dos elementos. */
+            color: var(--cor-bege-claro); /* Altera a cor do texto. */
+            margin-bottom: 8px; /* Altera o espaço externo na direção indicada. */
+            font-weight: 600; /* Altera a espessura das letras. */
+        }
+
+        .campo input, .campo textarea, .campo select {
+            width: 100%; /* Altera a largura. */
+            background: rgba(0,0,0,.65); /* Altera o fundo (cor, imagem ou degradê). */
+            color: #fff; /* Altera a cor do texto. */
+            border: 1px solid rgba(155,118,83,.55); /* Altera o contorno. */
+            border-radius: 8px; /* Altera o arredondamento dos cantos. */
+            padding: 14px; /* Altera o espaço interno. */
+            outline: none; /* Altera o contorno de foco. */
+            font-family: 'Montserrat', sans-serif; /* Altera a família tipográfica. */
+            transition: .3s; /* Altera a duração e suavidade das mudanças visuais. */
+        }
+
+        .campo textarea {
+            min-height: 140px; /* Altera a altura mínima. */
+            resize: vertical; /* Altera o redimensionamento manual do campo. */
+        }
+
+        .campo input:focus, .campo textarea:focus, .campo select:focus {
+            border-color: #fff; /* Altera o detalhe indicado da borda. */
+            box-shadow: 0 0 15px rgba(255,255,255,.15); /* Altera a sombra ou brilho da caixa. */
+        }
+
+        .mensagem-formulario {
+            display: none; /* Altera o modo de exibição e organização dos elementos. */
+            margin-top: 20px; /* Altera o espaço externo na direção indicada. */
+            padding: 15px; /* Altera o espaço interno. */
+            border: 1px solid var(--cor-bege); /* Altera o contorno. */
+            border-radius: 8px; /* Altera o arredondamento dos cantos. */
+            text-align: center; /* Altera o alinhamento horizontal do texto. */
+            color: #ddd; /* Altera a cor do texto. */
+        }
+
+        .rodape-contato {
+            width: 100%; /* Altera a largura. */
+            display: flex; /* Altera o modo de exibição e organização dos elementos. */
+            flex-direction: column; /* Altera a direção de organização dos itens. */
+            align-items: center; /* Altera o alinhamento dos itens no eixo transversal. */
+            margin-top: 100px; /* Altera o espaço externo na direção indicada. */
+            margin-bottom: 3cm; /* Altera o espaço externo na direção indicada. */
+        }
+
+        .linha-divisoria {
+            width: 80%; /* Altera a largura. */
+            height: 2px; /* Altera a altura. */
+            background-color: var(--cor-bege); /* Altera a cor de fundo. */
+            margin-bottom: 40px; /* Altera o espaço externo na direção indicada. */
+            box-shadow: 0 0 10px var(--cor-bege); /* Altera a sombra ou brilho da caixa. */
+        }
+
+        .icones-redes {
+            display: flex; /* Altera o modo de exibição e organização dos elementos. */
+            gap: 30px; /* Altera a distância entre itens. */
+            margin-bottom: 40px; /* Altera o espaço externo na direção indicada. */
+            flex-wrap: wrap; /* Altera a quebra dos itens em novas linhas. */
+            justify-content: center; /* Altera a distribuição dos itens no eixo principal. */
+        }
+
+        .icone-flutuante {
+            width: 60px; /* Altera a largura. */
+            height: 60px; /* Altera a altura. */
+            border-radius: 50%; /* Altera o arredondamento dos cantos. */
+            display: flex; /* Altera o modo de exibição e organização dos elementos. */
+            justify-content: center; /* Altera a distribuição dos itens no eixo principal. */
+            align-items: center; /* Altera o alinhamento dos itens no eixo transversal. */
+            border: 2px solid var(--cor-bege); /* Altera o contorno. */
+            color: var(--cor-bege); /* Altera a cor do texto. */
+            text-decoration: none; /* Altera a decoração do texto. */
+            box-shadow: var(--neon-botao); /* Altera a sombra ou brilho da caixa. */
+            transition: all .3s ease; /* Altera a duração e suavidade das mudanças visuais. */
+            animation: flutuar 3s ease-in-out infinite alternate; /* Altera a animação aplicada e sua duração/repetição. */
+        }
+
+        .icone-flutuante:hover {
+            background-color: #fff; /* Altera a cor de fundo. */
+            color: #000; /* Altera a cor do texto. */
+            border-color: #fff; /* Altera o detalhe indicado da borda. */
+            box-shadow: 0 0 30px #fff, inset 0 0 20px #ccc; /* Altera a sombra ou brilho da caixa. */
+            transform: scale(1.1); /* Altera a transformação de posição, escala ou rotação. */
+            animation-play-state: paused; /* Altera a pausa ou execução da animação. */
+        }
+
+        .icone-flutuante svg {
+            width: 30px; /* Altera a largura. */
+            height: 30px; /* Altera a altura. */
+        }
+
+        .botao-endereco {
+            display: flex; /* Altera o modo de exibição e organização dos elementos. */
+            align-items: center; /* Altera o alinhamento dos itens no eixo transversal. */
+            gap: 15px; /* Altera a distância entre itens. */
+            background: transparent; /* Altera o fundo (cor, imagem ou degradê). */
+            border: 2px solid var(--cor-bege); /* Altera o contorno. */
+            color: var(--cor-bege); /* Altera a cor do texto. */
+            padding: 15px 30px; /* Altera o espaço interno. */
+            border-radius: 12px; /* Altera o arredondamento dos cantos. */
+            text-decoration: none; /* Altera a decoração do texto. */
+            font-family: 'Montserrat', sans-serif; /* Altera a família tipográfica. */
+            font-weight: 600; /* Altera a espessura das letras. */
+            font-size: 1rem; /* Altera o tamanho das letras. */
+            text-align: center; /* Altera o alinhamento horizontal do texto. */
+            max-width: 95%; /* Altera a largura máxima. */
+            line-height: 1.5; /* Altera o espaço entre linhas de texto. */
+            box-shadow: var(--neon-botao); /* Altera a sombra ou brilho da caixa. */
+            transition: all .3s ease; /* Altera a duração e suavidade das mudanças visuais. */
+            animation: flutuar 4s ease-in-out infinite alternate-reverse; /* Altera a animação aplicada e sua duração/repetição. */
+        }
+
+        .botao-endereco:hover {
+            background-color: #fff; /* Altera a cor de fundo. */
+            color: #000; /* Altera a cor do texto. */
+            border-color: #fff; /* Altera o detalhe indicado da borda. */
+            box-shadow: 0 0 30px #fff, inset 0 0 20px #ccc; /* Altera a sombra ou brilho da caixa. */
+            transform: scale(1.05); /* Altera a transformação de posição, escala ou rotação. */
+            animation-play-state: paused; /* Altera a pausa ou execução da animação. */
+        }
+
+        .botao-endereco svg {
+            flex-shrink: 0; /* Ajusta flex-shrink nos elementos desta regra. */
+            width: 24px; /* Altera a largura. */
+            height: 24px; /* Altera a altura. */
+        }
+
+        @keyframes flutuar { /* Define os movimentos usados por esta animação. */
+            0% {
+                transform: translateY(0); /* Altera a transformação de posição, escala ou rotação. */
+            }
+            100% {
+                transform: translateY(-10px); /* Altera a transformação de posição, escala ou rotação. */
+            }
+        }
+
+        footer {
+            width: 100%; /* Altera a largura. */
+            background: #110a10; /* Altera o fundo (cor, imagem ou degradê). */
+            color: #ccc; /* Altera a cor do texto. */
+            padding: 60px 20px 20px; /* Altera o espaço interno. */
+            margin-top: 80px; /* Altera o espaço externo na direção indicada. */
+            border-top: 1px solid rgba(155,118,83,.3); /* Altera o detalhe indicado da borda. */
+        }
+
+        .footer-col h4 {
+            font-size: 1.3rem; /* Altera o tamanho das letras. */
+            margin-bottom: 25px; /* Altera o espaço externo na direção indicada. */
+            color: #fff; /* Altera a cor do texto. */
+            border-bottom: 2px solid var(--cor-bege); /* Altera o detalhe indicado da borda. */
+            padding-bottom: 10px; /* Altera o espaço interno na direção indicada. */
+            display: inline-block; /* Altera o modo de exibição e organização dos elementos. */
+        }
+
+        .footer-col p, .footer-col a {
+            color: #ccc; /* Altera a cor do texto. */
+            font-size: 1rem; /* Altera o tamanho das letras. */
+            margin-bottom: 10px; /* Altera o espaço externo na direção indicada. */
+            display: block; /* Altera o modo de exibição e organização dos elementos. */
+            transition: color .2s; /* Altera a duração e suavidade das mudanças visuais. */
+        }
+
+        .apresentacao-overlay {
+            position: fixed; /* Altera o sistema de posicionamento. */
+            inset: 0; /* Altera as distâncias em todas as bordas. */
+            width: 100vw; /* Altera a largura. */
+            height: 100vh; /* Altera a altura. */
+            background: radial-gradient(circle at center, rgba(155,118,83,.08), transparent 55%), rgba(0,0,0,.96); /* Altera o fundo (cor, imagem ou degradê). */
+            z-index: 9999; /* Altera a ordem de sobreposição. */
+            display: flex; /* Altera o modo de exibição e organização dos elementos. */
+            flex-direction: column; /* Altera a direção de organização dos itens. */
+            justify-content: center; /* Altera a distribuição dos itens no eixo principal. */
+            align-items: center; /* Altera o alinhamento dos itens no eixo transversal. */
+            opacity: 0; /* Altera a transparência. */
+            visibility: hidden; /* Altera a visibilidade. */
+            transition: opacity .5s ease; /* Altera a duração e suavidade das mudanças visuais. */
+            backdrop-filter: blur(8px); /* Altera os efeitos no fundo atrás do elemento. */
+            padding: 70px 20px; /* Altera o espaço interno. */
+        }
+
+        .apresentacao-overlay.aberto {
+            opacity: 1; /* Altera a transparência. */
+            visibility: visible; /* Altera a visibilidade. */
+        }
+
+        .btn-fechar {
+            position: absolute; /* Altera o sistema de posicionamento. */
+            top: 20px; /* Altera a distância superior. */
+            right: 30px; /* Altera a distância à direita. */
+            font-size: 2rem; /* Altera o tamanho das letras. */
+            color: #fff; /* Altera a cor do texto. */
+            background: none; /* Altera o fundo (cor, imagem ou degradê). */
+            border: none; /* Altera o contorno. */
+            cursor: pointer; /* Altera o cursor do mouse. */
+            text-shadow: 0 0 10px #fff; /* Altera o brilho ou sombra do texto. */
+            z-index: 10001; /* Altera a ordem de sobreposição. */
+            transition: transform .3s; /* Altera a duração e suavidade das mudanças visuais. */
+        }
+
+        .btn-fechar:hover {
+            transform: scale(1.2) rotate(90deg); /* Altera a transformação de posição, escala ou rotação. */
+        }
+
+        #container-cards {
+            width: 100%; /* Altera a largura. */
+            display: flex; /* Altera o modo de exibição e organização dos elementos. */
+            justify-content: center; /* Altera a distribuição dos itens no eixo principal. */
+            align-items: center; /* Altera o alinhamento dos itens no eixo transversal. */
+            overflow: hidden; /* Altera o recorte ou a rolagem do conteúdo. */
+        }
+
+        .card-apresentacao {
+            width: 100%; /* Altera a largura. */
+            max-width: 850px; /* Altera a largura máxima. */
+            max-height: 73vh; /* Altera a altura máxima. */
+            overflow-y: auto; /* Altera o recorte ou a rolagem vertical. */
+            background: radial-gradient(circle at top, rgba(155,118,83,.09), transparent 55%), #0a0a0a; /* Altera o fundo (cor, imagem ou degradê). */
+            border: 1px solid var(--cor-bege); /* Altera o contorno. */
+            border-radius: 18px; /* Altera o arredondamento dos cantos. */
+            padding: 45px; /* Altera o espaço interno. */
+            box-shadow: 0 15px 70px rgba(0,0,0,.8), 0 0 30px rgba(155,118,83,.10); /* Altera a sombra ou brilho da caixa. */
+            text-align: center; /* Altera o alinhamento horizontal do texto. */
+            opacity: 0; /* Altera a transparência. */
+            transform: scale(.88) translateY(30px); /* Altera a transformação de posição, escala ou rotação. */
+            transition: all .7s cubic-bezier(.25,.8,.25,1); /* Altera a duração e suavidade das mudanças visuais. */
+        }
+
+        .card-apresentacao::-webkit-scrollbar {
+            width: 8px; /* Altera a largura. */
+        }
+
+        .card-apresentacao::-webkit-scrollbar-thumb {
+            background: var(--cor-bege); /* Altera o fundo (cor, imagem ou degradê). */
+            border-radius: 4px; /* Altera o arredondamento dos cantos. */
+        }
+
+        .card-apresentacao.ativo {
+            opacity: 1; /* Altera a transparência. */
+            transform: scale(1) translateY(0); /* Altera a transformação de posição, escala ou rotação. */
+        }
+
+        .card-titulo {
+            font-size: 2.5rem; /* Altera o tamanho das letras. */
+            margin-bottom: 10px; /* Altera o espaço externo na direção indicada. */
+        }
+
+        .card-subtitulo {
+            font-size: 1.5rem; /* Altera o tamanho das letras. */
+            color: #ccc; /* Altera a cor do texto. */
+            margin-bottom: 30px; /* Altera o espaço externo na direção indicada. */
+            font-style: italic; /* Altera o estilo da fonte. */
+        }
+
+        .card-texto {
+            font-size: 1.2rem; /* Altera o tamanho das letras. */
+            line-height: 1.7; /* Altera o espaço entre linhas de texto. */
+            margin-bottom: 20px; /* Altera o espaço externo na direção indicada. */
+        }
+
+        .card-referencia {
+            font-size: 1rem; /* Altera o tamanho das letras. */
+            color: var(--cor-bege); /* Altera a cor do texto. */
+            font-weight: bold; /* Altera a espessura das letras. */
+            margin-top: 30px; /* Altera o espaço externo na direção indicada. */
+        }
+
+        .controles {
+            position: absolute; /* Altera o sistema de posicionamento. */
+            bottom: 30px; /* Altera a distância inferior. */
+            display: flex; /* Altera o modo de exibição e organização dos elementos. */
+            gap: 15px; /* Altera a distância entre itens. */
+            z-index: 10000; /* Altera a ordem de sobreposição. */
+        }
+
+        .btn-controle {
+            background: transparent; /* Altera o fundo (cor, imagem ou degradê). */
+            color: var(--cor-bege); /* Altera a cor do texto. */
+            border: 1px solid var(--cor-bege); /* Altera o contorno. */
+            padding: 10px 20px; /* Altera o espaço interno. */
+            border-radius: 5px; /* Altera o arredondamento dos cantos. */
+            cursor: pointer; /* Altera o cursor do mouse. */
+            font-family: 'Montserrat', sans-serif; /* Altera a família tipográfica. */
+            font-weight: 600; /* Altera a espessura das letras. */
+            text-transform: uppercase; /* Altera a transformação visual de maiúsculas/minúsculas. */
+            transition: all .3s; /* Altera a duração e suavidade das mudanças visuais. */
+        }
+
+        .btn-controle:hover {
+            background: var(--cor-bege); /* Altera o fundo (cor, imagem ou degradê). */
+            color: #000; /* Altera a cor do texto. */
+        }
+
+        .barra-progresso-container {
+            position: absolute; /* Altera o sistema de posicionamento. */
+            top: 0; /* Altera a distância superior. */
+            left: 0; /* Altera a distância à esquerda. */
+            width: 100%; /* Altera a largura. */
+            height: 6px; /* Altera a altura. */
+            background-color: #333; /* Altera a cor de fundo. */
+        }
+
+        .barra-progresso {
+            height: 100%; /* Altera a altura. */
+            background-color: var(--cor-bege); /* Altera a cor de fundo. */
+            width: 0%; /* Altera a largura. */
+            box-shadow: 0 0 10px var(--cor-bege); /* Altera a sombra ou brilho da caixa. */
+        }
+
+        .animar-barra {
+            animation: carregarBarra var(--tempo-slide) linear forwards; /* Altera a animação aplicada e sua duração/repetição. */
+        }
+
+        @keyframes carregarBarra { /* Define os movimentos usados por esta animação. */
+            from {
+                width: 0%; /* Altera a largura. */
+            }
+            to {
+                width: 100%; /* Altera a largura. */
+            }
+        }
+
+        .botao-flutuante-menu {
+            position: fixed; /* Altera o sistema de posicionamento. */
+            right: 20px; /* Altera a distância à direita. */
+            bottom: 25px; /* Altera a distância inferior. */
+            width: 58px; /* Altera a largura. */
+            height: 58px; /* Altera a altura. */
+            border-radius: 50%; /* Altera o arredondamento dos cantos. */
+            border: 2px solid #fff; /* Altera o contorno. */
+            background: rgba(0,0,0,.8); /* Altera o fundo (cor, imagem ou degradê). */
+            color: #fff; /* Altera a cor do texto. */
+            z-index: 8800; /* Altera a ordem de sobreposição. */
+            cursor: pointer; /* Altera o cursor do mouse. */
+            box-shadow: 0 0 20px rgba(255,255,255,.4); /* Altera a sombra ou brilho da caixa. */
+            animation: flutuar 3s ease-in-out infinite alternate; /* Altera a animação aplicada e sua duração/repetição. */
+            font-size: 1.3rem; /* Altera o tamanho das letras. */
+        }
+
+        .revelar {
+            opacity: 0; /* Altera a transparência. */
+            transform: translateY(40px); /* Altera a transformação de posição, escala ou rotação. */
+            transition: opacity 1s ease, transform 1s ease; /* Altera a duração e suavidade das mudanças visuais. */
+        }
+
+        .revelar.visivel {
+            opacity: 1; /* Altera a transparência. */
+            transform: translateY(0); /* Altera a transformação de posição, escala ou rotação. */
+        }
+
+        @keyframes fadeIn { /* Define os movimentos usados por esta animação. */
+            from {
+                opacity: 0; /* Altera a transparência. */
+            }
+            to {
+                opacity: 1; /* Altera a transparência. */
+            }
+        }
+
+        .bible-toolbar {
+            display: grid; /* Altera o modo de exibição e organização dos elementos. */
+            grid-template-columns: 2fr 1fr auto; /* Altera a quantidade e largura das colunas. */
+            gap: 10px; /* Altera a distância entre itens. */
+            margin-bottom: 16px; /* Altera o espaço externo na direção indicada. */
+        }
+
+        .bible-toolbar select, .bible-toolbar input {
+            width: 100%; /* Altera a largura. */
+            background: #050505; /* Altera o fundo (cor, imagem ou degradê). */
+            color: #fff; /* Altera a cor do texto. */
+            border: 1px solid rgba(155,118,83,.55); /* Altera o contorno. */
+            border-radius: 8px; /* Altera o arredondamento dos cantos. */
+            padding: 12px; /* Altera o espaço interno. */
+            font-family: 'Montserrat', sans-serif; /* Altera a família tipográfica. */
+        }
+
+        .bible-resultado {
+            white-space: pre-wrap; /* Altera a preservação de espaços e quebras de linha. */
+            line-height: 1.85; /* Altera o espaço entre linhas de texto. */
+            color: #ddd; /* Altera a cor do texto. */
+            max-height: 52vh; /* Altera a altura máxima. */
+            overflow-y: auto; /* Altera o recorte ou a rolagem vertical. */
+            padding: 18px; /* Altera o espaço interno. */
+            border: 1px solid rgba(155,118,83,.3); /* Altera o contorno. */
+            border-radius: 12px; /* Altera o arredondamento dos cantos. */
+            background: #050505; /* Altera o fundo (cor, imagem ou degradê). */
+            text-align: left; /* Altera o alinhamento horizontal do texto. */
+        }
+
+        .bible-resultado .versiculo {
+            display: block; /* Altera o modo de exibição e organização dos elementos. */
+            margin-bottom: 9px; /* Altera o espaço externo na direção indicada. */
+        }
+
+        .bible-resultado sup {
+            color: var(--cor-bege-claro); /* Altera a cor do texto. */
+            margin-right: 5px; /* Altera o espaço externo na direção indicada. */
+        }
+
+        .biblia-aviso {
+            padding: 12px 14px; /* Altera o espaço interno. */
+            border-left: 3px solid var(--cor-bege); /* Altera o detalhe indicado da borda. */
+            background: rgba(155,118,83,.08); /* Altera o fundo (cor, imagem ou degradê). */
+            color: #bbb; /* Altera a cor do texto. */
+            font-size: .86rem; /* Altera o tamanho das letras. */
+            line-height: 1.55; /* Altera o espaço entre linhas de texto. */
+            margin-bottom: 16px; /* Altera o espaço externo na direção indicada. */
+            text-align: left; /* Altera o alinhamento horizontal do texto. */
+        }
+
+        @media (max-width: 900px) { /* Ajusta o layout para a condição de tela indicada. */
+            .links-menu {
+                display: none; /* Altera o modo de exibição e organização dos elementos. */
+            }
+            .menu-mobile-btn {
+                display: block; /* Altera o modo de exibição e organização dos elementos. */
+            }
+            .grade-experiencias {
+                grid-template-columns: repeat(2, 1fr); /* Altera a quantidade e largura das colunas. */
+            }
+            .passos-evangelho {
+                grid-template-columns: repeat(2, 1fr); /* Altera a quantidade e largura das colunas. */
+            }
+        }
+
+        @media (max-width: 600px) { /* Ajusta o layout para a condição de tela indicada. */
+            .container-principal {
+                padding-top: 105px; /* Altera o espaço interno na direção indicada. */
+            }
+            .marca-menu {
+                font-size: .8rem; /* Altera o tamanho das letras. */
+                letter-spacing: 1px; /* Altera o espaço entre letras. */
+            }
+            .titulo-principal {
+                font-size: 1.8rem; /* Altera o tamanho das letras. */
+                letter-spacing: 2px; /* Altera o espaço entre letras. */
+            }
+            .subtitulo-principal {
+                font-size: .7rem; /* Altera o tamanho das letras. */
+                letter-spacing: 2px; /* Altera o espaço entre letras. */
+            }
+            .container-cruz {
+                margin: 40px 0; /* Altera o espaço externo. */
+            }
+            .sobre-nos {
+                padding: 30px 18px; /* Altera o espaço interno. */
+            }
+            .sobre-nos-titulo {
+                font-size: 1.6rem; /* Altera o tamanho das letras. */
+            }
+            .sobre-nos-texto {
+                font-size: 1rem; /* Altera o tamanho das letras. */
+            }
+            .sobre-nos-lista li {
+                font-size: 1rem; /* Altera o tamanho das letras. */
+            }
+            .botao-neon {
+                font-size: 1rem; /* Altera o tamanho das letras. */
+                padding: 12px 25px; /* Altera o espaço interno. */
+            }
+            .nova-secao {
+                padding: 35px 15px; /* Altera o espaço interno. */
+                margin-top: 60px; /* Altera o espaço externo na direção indicada. */
+            }
+            .grade-experiencias {
+                grid-template-columns: 1fr; /* Altera a quantidade e largura das colunas. */
+            }
+            .grade-info, .cultos-grid {
+                grid-template-columns: 1fr; /* Altera a quantidade e largura das colunas. */
+            }
+            .passos-evangelho {
+                grid-template-columns: 1fr; /* Altera a quantidade e largura das colunas. */
+            }
+            .card-apresentacao {
+                padding: 25px 15px; /* Altera o espaço interno. */
+                max-height: 70vh; /* Altera a altura máxima. */
+            }
+            .card-titulo {
+                font-size: 1.8rem; /* Altera o tamanho das letras. */
+            }
+            .card-subtitulo {
+                font-size: 1.2rem; /* Altera o tamanho das letras. */
+                margin-bottom: 15px; /* Altera o espaço externo na direção indicada. */
+            }
+            .card-texto {
+                font-size: 1rem; /* Altera o tamanho das letras. */
+            }
+            .card-referencia {
+                font-size: .9rem; /* Altera o tamanho das letras. */
+            }
+            .controles {
+                bottom: 15px; /* Altera a distância inferior. */
+                gap: 8px; /* Altera a distância entre itens. */
+            }
+            .btn-controle {
+                padding: 8px 10px; /* Altera o espaço interno. */
+                font-size: .7rem; /* Altera o tamanho das letras. */
+            }
+            .btn-fechar {
+                top: 15px; /* Altera a distância superior. */
+                right: 20px; /* Altera a distância à direita. */
+                font-size: 1.5rem; /* Altera o tamanho das letras. */
+            }
+            .icone-flutuante {
+                width: 50px; /* Altera a largura. */
+                height: 50px; /* Altera a altura. */
+            }
+            .icone-flutuante svg {
+                width: 25px; /* Altera a largura. */
+                height: 25px; /* Altera a altura. */
+            }
+            .botao-endereco {
+                font-size: .85rem; /* Altera o tamanho das letras. */
+                padding: 15px 20px; /* Altera o espaço interno. */
+                flex-direction: column; /* Altera a direção de organização dos itens. */
+                gap: 10px; /* Altera a distância entre itens. */
+            }
+            .botao-flutuante-menu {
+                width: 50px; /* Altera a largura. */
+                height: 50px; /* Altera a altura. */
+                right: 15px; /* Altera a distância à direita. */
+                bottom: 15px; /* Altera a distância inferior. */
+            }
+            .bible-toolbar {
+                grid-template-columns: 1fr; /* Altera a quantidade e largura das colunas. */
+            }
+        }
+
+        .igreja-online-grid {
+            display:grid; /* Altera o modo de exibição e organização dos elementos. */
+            grid-template-columns:repeat(4,1fr); /* Altera a quantidade e largura das colunas. */
+            gap:16px; /* Altera a distância entre itens. */
+            width:100% /* Altera a largura. */
+        }
+
+        .igreja-online-card {
+            border:1px solid rgba(155,118,83,.55); /* Altera o contorno. */
+            border-radius:16px; /* Altera o arredondamento dos cantos. */
+            padding:24px 18px; /* Altera o espaço interno. */
+            background:linear-gradient(145deg,rgba(25,25,25,.92),rgba(5,5,5,.98)); /* Altera o fundo (cor, imagem ou degradê). */
+            text-align:center; /* Altera o alinhamento horizontal do texto. */
+            cursor:pointer; /* Altera o cursor do mouse. */
+            transition:.35s; /* Altera a duração e suavidade das mudanças visuais. */
+            min-height:175px; /* Altera a altura mínima. */
+            display:flex; /* Altera o modo de exibição e organização dos elementos. */
+            flex-direction:column; /* Altera a direção de organização dos itens. */
+            justify-content:center; /* Altera a distribuição dos itens no eixo principal. */
+            align-items:center /* Altera o alinhamento dos itens no eixo transversal. */
+        }
+
+        .igreja-online-card:hover {
+            transform:translateY(-6px); /* Altera a transformação de posição, escala ou rotação. */
+            border-color:#fff; /* Altera o detalhe indicado da borda. */
+            box-shadow:0 0 25px rgba(155,118,83,.3) /* Altera a sombra ou brilho da caixa. */
+        }
+
+        .igreja-online-card .ico {
+            font-size:2rem; /* Altera o tamanho das letras. */
+            margin-bottom:12px /* Altera o espaço externo na direção indicada. */
+        }
+
+        .igreja-online-card h3 {
+            font-size:1.05rem; /* Altera o tamanho das letras. */
+            margin-bottom:8px /* Altera o espaço externo na direção indicada. */
+        }
+
+        .igreja-online-card p {
+            font-size:.82rem; /* Altera o tamanho das letras. */
+            color:#aaa; /* Altera a cor do texto. */
+            line-height:1.5 /* Altera o espaço entre linhas de texto. */
+        }
+
+        .status-banco {
+            margin:18px auto 0; /* Altera o espaço externo. */
+            max-width:850px; /* Altera a largura máxima. */
+            padding:12px 16px; /* Altera o espaço interno. */
+            border-radius:10px; /* Altera o arredondamento dos cantos. */
+            border:1px solid rgba(155,118,83,.5); /* Altera o contorno. */
+            font-size:.85rem; /* Altera o tamanho das letras. */
+            color:#ccc; /* Altera a cor do texto. */
+            text-align:center; /* Altera o alinhamento horizontal do texto. */
+            background:rgba(0,0,0,.4) /* Altera o fundo (cor, imagem ou degradê). */
+        }
+
+        .status-banco.ok {
+            border-color:#5b9d78; /* Altera o detalhe indicado da borda. */
+            color:#bce6cd /* Altera a cor do texto. */
+        }
+
+        .status-banco.erro {
+            border-color:#9e5c5c; /* Altera o detalhe indicado da borda. */
+            color:#f0bcbc /* Altera a cor do texto. */
+        }
+
+        .sistema-overlay {
+            position:fixed; /* Altera o sistema de posicionamento. */
+            inset:0; /* Altera as distâncias em todas as bordas. */
+            z-index:11000; /* Altera a ordem de sobreposição. */
+            background:rgba(0,0,0,.97); /* Altera o fundo (cor, imagem ou degradê). */
+            backdrop-filter:blur(10px); /* Altera os efeitos no fundo atrás do elemento. */
+            display:none; /* Altera o modo de exibição e organização dos elementos. */
+            overflow-y:auto; /* Altera o recorte ou a rolagem vertical. */
+            padding:80px 20px 40px /* Altera o espaço interno. */
+        }
+
+        .sistema-overlay.aberto {
+            display:block; /* Altera o modo de exibição e organização dos elementos. */
+            animation:fadeIn .3s ease /* Altera a animação aplicada e sua duração/repetição. */
+        }
+
+        .sistema-box {
+            width:min(1180px,100%); /* Altera a largura. */
+            margin:auto; /* Altera o espaço externo. */
+            border:1px solid var(--cor-bege); /* Altera o contorno. */
+            border-radius:18px; /* Altera o arredondamento dos cantos. */
+            background:radial-gradient(circle at top,rgba(155,118,83,.08),transparent 42%),#090909; /* Altera o fundo (cor, imagem ou degradê). */
+            padding:28px; /* Altera o espaço interno. */
+            box-shadow:0 20px 80px rgba(0,0,0,.8) /* Altera a sombra ou brilho da caixa. */
+        }
+
+        .sistema-topo {
+            display:flex; /* Altera o modo de exibição e organização dos elementos. */
+            justify-content:space-between; /* Altera a distribuição dos itens no eixo principal. */
+            gap:20px; /* Altera a distância entre itens. */
+            align-items:center; /* Altera o alinhamento dos itens no eixo transversal. */
+            border-bottom:1px solid rgba(155,118,83,.35); /* Altera o detalhe indicado da borda. */
+            padding-bottom:18px; /* Altera o espaço interno na direção indicada. */
+            margin-bottom:22px /* Altera o espaço externo na direção indicada. */
+        }
+
+        .sistema-topo h2 {
+            text-align:left /* Altera o alinhamento horizontal do texto. */
+        }
+
+        .sistema-fechar {
+            border:1px solid #fff; /* Altera o contorno. */
+            background:transparent; /* Altera o fundo (cor, imagem ou degradê). */
+            color:#fff; /* Altera a cor do texto. */
+            border-radius:10px; /* Altera o arredondamento dos cantos. */
+            padding:9px 13px; /* Altera o espaço interno. */
+            cursor:pointer /* Altera o cursor do mouse. */
+        }
+
+        .sistema-fechar:hover {
+            background:#fff; /* Altera o fundo (cor, imagem ou degradê). */
+            color:#000 /* Altera a cor do texto. */
+        }
+
+        .sistema-grid {
+            display:grid; /* Altera o modo de exibição e organização dos elementos. */
+            grid-template-columns:repeat(2,1fr); /* Altera a quantidade e largura das colunas. */
+            gap:16px /* Altera a distância entre itens. */
+        }
+
+        .sistema-grid-3 {
+            display:grid; /* Altera o modo de exibição e organização dos elementos. */
+            grid-template-columns:repeat(3,1fr); /* Altera a quantidade e largura das colunas. */
+            gap:16px /* Altera a distância entre itens. */
+        }
+
+        .sistema-card {
+            border:1px solid rgba(155,118,83,.4); /* Altera o contorno. */
+            border-radius:14px; /* Altera o arredondamento dos cantos. */
+            background:rgba(0,0,0,.45); /* Altera o fundo (cor, imagem ou degradê). */
+            padding:20px /* Altera o espaço interno. */
+        }
+
+        .sistema-card h3 {
+            text-align:left; /* Altera o alinhamento horizontal do texto. */
+            margin-bottom:14px /* Altera o espaço externo na direção indicada. */
+        }
+
+        .sistema-card p {
+            color:#bbb; /* Altera a cor do texto. */
+            line-height:1.6 /* Altera o espaço entre linhas de texto. */
+        }
+
+        .sistema-form {
+            display:grid; /* Altera o modo de exibição e organização dos elementos. */
+            gap:14px /* Altera a distância entre itens. */
+        }
+
+        .sistema-form label {
+            font-weight:600; /* Altera a espessura das letras. */
+            color:var(--cor-bege-claro); /* Altera a cor do texto. */
+            font-size:.86rem /* Altera o tamanho das letras. */
+        }
+
+        .sistema-form input,.sistema-form textarea,.sistema-form select {
+            width:100%; /* Altera a largura. */
+            margin-top:7px; /* Altera o espaço externo na direção indicada. */
+            padding:12px 13px; /* Altera o espaço interno. */
+            border-radius:9px; /* Altera o arredondamento dos cantos. */
+            border:1px solid rgba(155,118,83,.55); /* Altera o contorno. */
+            background:#050505; /* Altera o fundo (cor, imagem ou degradê). */
+            color:#fff; /* Altera a cor do texto. */
+            font-family:inherit /* Altera a família tipográfica. */
+        }
+
+        .sistema-form textarea {
+            min-height:110px; /* Altera a altura mínima. */
+            resize:vertical /* Altera o redimensionamento manual do campo. */
+        }
+
+        .sistema-btn {
+            border:1px solid var(--cor-bege); /* Altera o contorno. */
+            background:transparent; /* Altera o fundo (cor, imagem ou degradê). */
+            color:#fff; /* Altera a cor do texto. */
+            border-radius:9px; /* Altera o arredondamento dos cantos. */
+            padding:12px 16px; /* Altera o espaço interno. */
+            cursor:pointer; /* Altera o cursor do mouse. */
+            font-weight:700; /* Altera a espessura das letras. */
+            transition:.25s /* Altera a duração e suavidade das mudanças visuais. */
+        }
+
+        .sistema-btn:hover {
+            background:var(--cor-bege); /* Altera o fundo (cor, imagem ou degradê). */
+            color:#000 /* Altera a cor do texto. */
+        }
+
+        .sistema-btn.sec {
+            border-color:#777; /* Altera o detalhe indicado da borda. */
+            color:#ddd /* Altera a cor do texto. */
+        }
+
+        .sistema-msg {
+            display:none; /* Altera o modo de exibição e organização dos elementos. */
+            margin-top:12px; /* Altera o espaço externo na direção indicada. */
+            padding:12px; /* Altera o espaço interno. */
+            border:1px solid rgba(155,118,83,.45); /* Altera o contorno. */
+            border-radius:9px; /* Altera o arredondamento dos cantos. */
+            color:#ddd /* Altera a cor do texto. */
+        }
+
+        .sistema-msg.show {
+            display:block /* Altera o modo de exibição e organização dos elementos. */
+        }
+
+        .eventos-publicos {
+            display:grid; /* Altera o modo de exibição e organização dos elementos. */
+            grid-template-columns:repeat(3,1fr); /* Altera a quantidade e largura das colunas. */
+            gap:16px /* Altera a distância entre itens. */
+        }
+
+        .evento-publico {
+            overflow:hidden; /* Altera o recorte ou a rolagem do conteúdo. */
+            border:1px solid rgba(155,118,83,.4); /* Altera o contorno. */
+            border-radius:14px; /* Altera o arredondamento dos cantos. */
+            background:#070707 /* Altera o fundo (cor, imagem ou degradê). */
+        }
+
+        .evento-publico img {
+            width:100%; /* Altera a largura. */
+            aspect-ratio:16/9; /* Altera a proporção entre largura e altura. */
+            object-fit:cover; /* Altera o enquadramento de imagens e vídeos. */
+            background:#111 /* Altera o fundo (cor, imagem ou degradê). */
+        }
+
+        .evento-publico .conteudo {
+            padding:16px /* Altera o espaço interno. */
+        }
+
+        .evento-publico h3 {
+            text-align:left; /* Altera o alinhamento horizontal do texto. */
+            font-size:1.05rem /* Altera o tamanho das letras. */
+        }
+
+        .evento-publico .meta {
+            font-size:.8rem; /* Altera o tamanho das letras. */
+            color:var(--cor-bege-claro); /* Altera a cor do texto. */
+            margin:8px 0 /* Altera o espaço externo. */
+        }
+
+        .evento-publico p {
+            font-size:.88rem; /* Altera o tamanho das letras. */
+            color:#bbb; /* Altera a cor do texto. */
+            line-height:1.5 /* Altera o espaço entre linhas de texto. */
+        }
+
+        .painel-kpis {
+            display:grid; /* Altera o modo de exibição e organização dos elementos. */
+            grid-template-columns:repeat(5,1fr); /* Altera a quantidade e largura das colunas. */
+            gap:12px; /* Altera a distância entre itens. */
+            margin:18px 0 /* Altera o espaço externo. */
+        }
+
+        .kpi {
+            border:1px solid rgba(155,118,83,.4); /* Altera o contorno. */
+            border-radius:12px; /* Altera o arredondamento dos cantos. */
+            padding:15px; /* Altera o espaço interno. */
+            text-align:center; /* Altera o alinhamento horizontal do texto. */
+            background:rgba(0,0,0,.4) /* Altera o fundo (cor, imagem ou degradê). */
+        }
+
+        .kpi strong {
+            display:block; /* Altera o modo de exibição e organização dos elementos. */
+            font-size:1.6rem; /* Altera o tamanho das letras. */
+            color:#fff /* Altera a cor do texto. */
+        }
+
+        .kpi span {
+            font-size:.74rem; /* Altera o tamanho das letras. */
+            color:#aaa /* Altera a cor do texto. */
+        }
+
+        .painel-tabs {
+            display:flex; /* Altera o modo de exibição e organização dos elementos. */
+            flex-wrap:wrap; /* Altera a quebra dos itens em novas linhas. */
+            gap:8px; /* Altera a distância entre itens. */
+            margin:16px 0 /* Altera o espaço externo. */
+        }
+
+        .painel-tabs button {
+            padding:9px 12px; /* Altera o espaço interno. */
+            border-radius:8px; /* Altera o arredondamento dos cantos. */
+            border:1px solid rgba(155,118,83,.45); /* Altera o contorno. */
+            background:#050505; /* Altera o fundo (cor, imagem ou degradê). */
+            color:#ddd; /* Altera a cor do texto. */
+            cursor:pointer /* Altera o cursor do mouse. */
+        }
+
+        .painel-tabs button:hover {
+            border-color:#fff /* Altera o detalhe indicado da borda. */
+        }
+
+        .tabela-wrap {
+            overflow-x:auto /* Altera o recorte ou a rolagem horizontal. */
+        }
+
+        .tabela-sistema {
+            width:100%; /* Altera a largura. */
+            border-collapse:collapse; /* Altera a junção das bordas de tabelas. */
+            min-width:720px /* Altera a largura mínima. */
+        }
+
+        .tabela-sistema th,.tabela-sistema td {
+            padding:10px; /* Altera o espaço interno. */
+            border-bottom:1px solid rgba(155,118,83,.25); /* Altera o detalhe indicado da borda. */
+            text-align:left; /* Altera o alinhamento horizontal do texto. */
+            font-size:.82rem; /* Altera o tamanho das letras. */
+            vertical-align:top /* Ajusta vertical-align nos elementos desta regra. */
+        }
+
+        .tabela-sistema th {
+            color:var(--cor-bege-claro) /* Altera a cor do texto. */
+        }
+
+        .badge-role {
+            display:inline-block; /* Altera o modo de exibição e organização dos elementos. */
+            padding:4px 8px; /* Altera o espaço interno. */
+            border:1px solid rgba(155,118,83,.5); /* Altera o contorno. */
+            border-radius:999px; /* Altera o arredondamento dos cantos. */
+            font-size:.72rem /* Altera o tamanho das letras. */
+        }
+
+        .oculto {
+            display:none!important /* Altera o modo de exibição e organização dos elementos. */
+        }
+
+        @media(max-width:900px) { /* Ajusta o layout para a condição de tela indicada. */
+            .igreja-online-grid {
+                grid-template-columns:repeat(2,1fr) /* Altera a quantidade e largura das colunas. */
+            }
+            .eventos-publicos {
+                grid-template-columns:repeat(2,1fr) /* Altera a quantidade e largura das colunas. */
+            }
+            .painel-kpis {
+                grid-template-columns:repeat(3,1fr) /* Altera a quantidade e largura das colunas. */
+            }
+            .sistema-grid-3 {
+                grid-template-columns:1fr 1fr /* Altera a quantidade e largura das colunas. */
+            }
+        }
+
+        @media(max-width:600px) { /* Ajusta o layout para a condição de tela indicada. */
+            .igreja-online-grid,.eventos-publicos,.sistema-grid,.sistema-grid-3 {
+                grid-template-columns:1fr /* Altera a quantidade e largura das colunas. */
+            }
+            .painel-kpis {
+                grid-template-columns:repeat(2,1fr) /* Altera a quantidade e largura das colunas. */
+            }
+            .sistema-overlay {
+                padding:72px 10px 24px /* Altera o espaço interno. */
+            }
+            .sistema-box {
+                padding:18px /* Altera o espaço interno. */
+            }
+            .sistema-topo {
+                align-items:flex-start /* Altera o alinhamento dos itens no eixo transversal. */
+            }
+            .sistema-topo h2 {
+                font-size:1.45rem /* Altera o tamanho das letras. */
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ==========================================================
+         FUNDO ANIMADO
+         ========================================================== -->
+
+    <canvas id="particulas"></canvas>
+    <div class="luz-fundo"></div>
+
+
+    <!-- ==========================================================
+         TELA DE ABERTURA ORIGINAL
+         ========================================================== -->
+
+    <div id="splash-screen">
+
+        <video
+            id="splash-video"
+            src="gemini_generated_video_290884b6_1.mp4"
+            autoplay
+            muted
+            playsinline>
+        </video>
+
+    </div>
+
+
+    <!-- ==========================================================
+         MENU
+         ========================================================== -->
+
+    <header class="menu-superior">
+
+        <div class="menu-interno">
+
+            <a href="#inicio" class="marca-menu">
+                IGREJA PEREGRINOS DO EVANGELHO
+            </a>
+
+            <nav class="links-menu">
+
+                 <button onclick="irPara('inicio')">
+					INÍCIO
+				</button>
+
+                <button onclick="irPara('sobre-nos-secao')">
+                    SOBRE NÓS
+                </button>
+
+                <button onclick="abrirTelaExtra('fe')">
+                    NOSSA FÉ
+                </button>
+
+                <button onclick="abrirTelaExtra('evangelho')">
+                    O EVANGELHO
+                </button>
+
+				 <button onclick="abrirTelaExtra('vida')">
+					VIDA CRISTÃ
+				</button>
+				
+				<button onclick="window.location.href='https://www.instagram.com/p/Dd2CN3mSBY1/?stkn=MWtycjJuaHhxY3ptMg=='">
+					RESSIGNIFICAR
+				</button>
+
+                <button onclick="abrirTelaExtra('cultos')">
+                    CULTOS
+                </button>
+
+				<button onclick="abrirTelaExtra('ministerios')">
+					MINISTÉRIOS
+				</button>
+
+                <button onclick="abrirTelaExtra('oracao')">
+                    PEDIDO DE ORAÇÃO
+                </button>
+				 
+				 <button
+                onclick="abrirTelaExtra('serenidade')">
+					ORAÇÃO DA SERENIDADE
+				</button>
+                
+				<button onclick="abrirTelaExtra('biblia')">
+                    BÍBLIA
+                </button>
+				
+				<button onclick="abrirApresentacao('dizimos')">
+					DÍZIMOS E OFERTAS
+				</button> 
+
+               <button onclick="irPara('icones-redes')">
+                    CONTATOS
+                </button>
+
+            </nav>
+
+            <button
+                class="menu-mobile-btn"
+                onclick="alternarMenuMobile()">
+                ☰
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- ==========================================================
+         MENU MOBILE
+         ========================================================== -->
+
+    <div class="menu-mobile" id="menu-mobile">
+
+        <button onclick="irPara('inicio'); fecharMenuMobile();">
+            ✦ Início
+        </button>
+
+        <button onclick="irPara('sobre-nos-secao'); fecharMenuMobile();">
+            ✦ Sobre Nós
+        </button>
+
+        <button onclick="abrirTelaExtra('fe'); fecharMenuMobile();">
+            ✦ Nossa Fé
+        </button>
+
+        <button onclick="abrirTelaExtra('evangelho'); fecharMenuMobile();">
+            ✦ O Evangelho
+        </button>
+
+        <button onclick="abrirTelaExtra('vida'); fecharMenuMobile();">
+            ✦ Vida Cristã
+        </button>
+		
+		<button onclick="window.location.href='https://www.instagram.com/p/Dd2CN3mSBY1/?stkn=MWtycjJuaHhxY3ptMg=='; fecharMenuMobile();">
+            ✦ Ressignificar
+        </button>
+
+        <button onclick="abrirTelaExtra('ministerios'); fecharMenuMobile();">
+            ✦ Ministérios
+        </button>
+
+        <button onclick="abrirTelaExtra('cultos'); fecharMenuMobile();">
+            ✦ Cultos
+        </button>
+
+        <button onclick="abrirTelaExtra('oracao'); fecharMenuMobile();">
+            ✦ Pedidos de Oração
+        </button>
+
+        <button onclick="abrirTelaExtra('serenidade'); fecharMenuMobile();">
+            ✦ Oração da Serenidade
+        </button>
+
+        <button onclick="abrirTelaExtra('biblia'); fecharMenuMobile();">
+            ✦ Bíblia Sagrada
+        </button>
+		
+		<button onclick="abrirApresentacao('dizimos'); fecharMenuMobile();">
+            ✦ Dízimos e Ofertas
+		 </button> 
+		  
+		  <button onclick="irPara('icones-redes'); fecharMenuMobile();">
+            ✦ Contatos
+          </button>
+
+    </div>
+
+
+    <!-- ==========================================================
+         CONTEÚDO PRINCIPAL
+         ========================================================== -->
+
+    <main
+        class="container-principal"
+        id="inicio">
+
+
+        <!-- LOGOTIPO ORIGINAL -->
+
+        <img
+            src=""
+            alt="Logotipo Igreja Peregrinos do Evangelho"
+            class="logotipo"
+            onerror="this.style.display='none'">
+
+
+        <!-- TÍTULO ORIGINAL -->
+
+        <h1 class="titulo-principal">
+            IGREJA PEREGRINOS DO EVANGELHO <br> (IPE)
+        </h1>
+
+        <p class="subtitulo-principal">
+            SEGUINDO A JESUS CRISTO, ESTE É O LEMA DA IPE.
+        </p>
+
+
+        <!-- CRUZ ORIGINAL -->
+
+        <div class="container-cruz">
+
+            <img
+                src="LogoCruz.png"
+                alt="Cruz de Cristo"
+                class="cruz-3d"
+                onerror="this.alt='[Coloque a imagem LogoCruz.png na mesma pasta]'">
+
+        </div>
+
+
+        <!-- ======================================================
+             SOBRE NÓS ORIGINAL
+             ====================================================== -->
+
+        <div
+            class="sobre-nos"
+            id="sobre-nos-secao">
+
+            <h2 class="sobre-nos-titulo">
+                SOBRE NÓS
+            </h2>
+
+            <p class="sobre-nos-texto">
+
+                De novo, Jesus lhes falou, dizendo:
+
+                <br><br>
+
+                "Eu sou a luz do mundo. Quem me segue não andará
+                nas trevas; pelo contrário, terá a luz da vida."
+
+                <br>
+
+                <strong>(João 8:12)</strong>
+
+            </p>
+
+            <ul class="sobre-nos-lista">
+
+                <li>1-Somente a graça</li>
+                <li>2-Somente a fé</li>
+                <li>3-Somente Cristo</li>
+                <li>4-Somente o Espírito Santo</li>
+                <li>5-Somente as Escrituras</li>
+                <li>6-Somente a Deus a glória</li>
+
+            </ul>
+
+            <div class="sobre-nos-rodape">
+
+                Uma igreja reformada sempre se reformando.
+                II Tm. 3.16-17
+
+            </div>
+
+        </div>
+
+
+        <!-- ======================================================
+             BOTÕES ORIGINAIS
+             ====================================================== -->
+
+        <div class="container-botoes">
+
+            <div class="linha-botoes">
+
+                <button
+                    class="botao-neon"
+                    onclick="abrirApresentacao('pilares')">
+
+                    PILARES
+
+                </button>
+
+                <button
+                    class="botao-neon"
+                    onclick="abrirCredo()">
+
+                    CREDO APOSTÓLICO
+
+                </button>
+
+            </div>
+
+             <!-- ======================================================
+             NOVA ÁREA: CONHEÇA A IGREJA
+             ====================================================== -->
+
+        <section class="nova-secao revelar">
+
+            <h2 class="titulo-secao">
+                CONHEÇA A NOSSA IGREJA
+            </h2>
+
+            <p class="descricao-secao">
+
+                Mais do que uma página, este é um espaço para conhecer
+                nossa fé, nossa visão, nossa comunidade e a mensagem
+                do Evangelho de Jesus Cristo.
+
+            </p>
+
+            <div class="grade-experiencias">
+
+
+                <div
+                    class="card-experiencia"
+                    onclick="abrirTelaExtra('fe')">
+
+                    <div class="icone-experiencia">
+                        ✝
+                    </div>
+
+                    <h3>
+                        NOSSA FÉ
+                    </h3>
+
+                    <p>
+                        Conheça aquilo que cremos e confessamos.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="card-experiencia"
+                    onclick="abrirTelaExtra('evangelho')">
+
+                    <div class="icone-experiencia">
+                        ✦
+                    </div>
+
+                    <h3>
+                        O EVANGELHO
+                    </h3>
+
+                    <p>
+                        Uma mensagem de esperança, graça e redenção.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="card-experiencia"
+                    onclick="abrirTelaExtra('vida')">
+
+                    <div class="icone-experiencia">
+                        ♡
+                    </div>
+
+                    <h3>
+                        VIDA CRISTÃ
+                    </h3>
+
+                    <p>
+                        Caminhando diariamente com Cristo.
+                    </p>
+
+                </div>
+
+                <div
+                    class="card-experiencia"
+                    onclick="window.location.href='https://www.instagram.com/p/Dd2CN3mSBY1/?stkn=MWtycjJuaHhxY3ptMg=='">
+
+                    <div class="icone-experiencia">
+                        ∞
+                    </div>
+
+                    <h3>
+                        RESSIGNIFICAR<br>
+                        UM PROGRAMA TERAPÊUTICO CRISTÃO
+                    </h3>
+
+                    <p>
+                        Clique e saiba mais sobre o programa e venha fazer parte. Tenha a certeza de sua verdadeira identidade: Você é o filho amado do Pai Celestial.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="card-experiencia"
+                    onclick="abrirTelaExtra('ministerios')">
+
+                    <div class="icone-experiencia">
+                        ◎
+                    </div>
+
+                    <h3>
+                        MINISTÉRIOS
+                    </h3>
+
+                    <p>
+                        Servindo a Deus e cuidando uns dos outros.
+                    </p>
+
+                </div>
+               
+   			   <div
+                    class="card-experiencia"
+                    onclick="abrirApresentacao('dizimos')">
+
+                    <div class="icone-experiencia">
+                        ☆
+                    </div>
+
+                    <h3>
+                        DÍZIMOS E OFERTAS
+                    </h3>
+
+                    <p>
+                    Contribua com alegria para a obra de Deus. Sua oferta e seu dízimo ajudam a levar adiante a missão do Evangelho.
+                    </p>
+
+                </div>
+				
+				</div>
+				</div>
+				 <div
+                    class="card-experiencia"
+                    onclick="abrirTelaExtra('serenidade')">
+
+                    <div class="icone-experiencia">
+                        人
+                    </div>
+
+                    <h3>
+                        ORAÇÃO DA SERENIDADE
+                    </h3>
+
+                    <p>
+                        Bíblia Despertar, PÁG. 25
+                    </p>
+
+                </div>
+				</div>
+
+                <div
+                    class="card-experiencia"
+                    onclick="abrirTelaExtra('biblia')">
+
+                    <div class="icone-experiencia">
+                        📖
+                    </div>
+
+                    <h3>
+                        BÍBLIA SAGRADA
+                    </h3>
+
+                    <p>
+                        Consulte o Antigo e o Novo Testamento online.
+                    </p>
+
+                </div>
+
+            </div>
+           
+            
+           
+        </section>
+
+
+        <!-- ======================================================
+             NOVA ÁREA: EVANGELHO
+             ====================================================== -->
+
+        <section class="nova-secao revelar">
+
+            <div class="evangelho-destaque">
+
+                <h2 class="titulo-secao">
+                    O CENTRO É CRISTO
+                </h2>
+
+                <p class="evangelho-frase">
+
+                    "Porque Deus amou o mundo de tal maneira
+                    que deu o seu Filho unigênito..."
+
+                    <br>
+
+                    <span>
+                        João 3:16
+                    </span>
+
+                </p>
+
+                <p class="descricao-secao">
+
+                    O Evangelho anuncia a boa notícia da salvação
+                    em Jesus Cristo. Não somos chamados apenas para
+                    conhecer uma religião, mas para conhecer,
+                    seguir e glorificar a Cristo.
+
+                </p>
+
+                <button
+                    class="botao-neon"
+                    onclick="abrirTelaExtra('evangelho')">
+
+                    CONHEÇA O EVANGELHO
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ======================================================
+             NOVA ÁREA: CULTOS
+             ====================================================== -->
+
+        <section class="nova-secao revelar">
+
+            <h2 class="titulo-secao">
+                VENHA NOS VISITAR
+            </h2>
+
+            <p class="descricao-secao">
+
+                Nossas portas estão abertas para você e sua família.
+                Venha participar conosco de um momento de adoração,
+                comunhão e exposição da Palavra de Deus.
+
+            </p>
+
+            <div class="cultos-grid">
+			
+			
+               <div class="culto-card">
+
+                    <div class="culto-dia">
+                        DOMINGOS
+                    </div>
+
+                    <div class="culto-hora">
+                        10h e 18h
+                    </div>
+
+                    <p>
+                        Culto de adoração.
+                    </p>
+
+                </div>
+				
+                <div class="culto-card">
+
+                    <div class="culto-dia">
+                        QUARTAS-FEIRAS
+                    </div>
+
+                    <div class="culto-hora">
+                        19h30
+                    </div>
+
+                    <p>
+                        JARDIM DE ORAÇÃO <br> Culto, Cura, Libertação, Crescimento e Comunhão.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ======================================================
+             NOVA ÁREA: MENSAGEM FINAL
+             ====================================================== -->
+
+        <section class="nova-secao revelar">
+
+            <h2 class="titulo-secao">
+                VOCÊ É BEM-VINDO
+            </h2>
+
+            <p class="evangelho-frase">
+
+                Há lugar para você.
+
+                <br>
+
+                Há uma família esperando por você.
+
+                <br>
+
+                <span>
+                    E acima de tudo, há um Salvador.
+                </span>
+
+            </p>
+
+            <p class="descricao-secao">
+
+                Venha conhecer nossa igreja, ouvir a Palavra,
+                adorar a Deus e caminhar conosco.
+
+            </p>
+
+            <div
+                style="
+                display:flex;
+                justify-content:center;
+                flex-wrap:wrap;
+                gap:15px;">
+
+                <button
+                    class="botao-neon"
+                    onclick="abrirTelaExtra('contato')">
+
+                    FALE CONOSCO
+
+                </button>
+
+                <button
+                    class="botao-neon"
+                    onclick="abrirTelaExtra('oracao')">
+
+                    PEDIR ORAÇÃO
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ======================================================
+             ECOSSISTEMA ONLINE DA IGREJA — BANCO COMPARTILHADO
+             ====================================================== -->
+        <section class="nova-secao revelar" id="igreja-online">
+            <h2 class="titulo-secao">ECOSSISTEMA DIGITAL DA IGREJA</h2>
+            <p class="descricao-secao">Cadastros, eventos e atendimento conectados a um banco de dados online. Os registros desta área são compartilhados entre computadores e celulares quando o Supabase estiver configurado.</p>
+            <div class="igreja-online-grid">
+                <div class="igreja-online-card" onclick="abrirSistemaIgreja('visitante')"><div class="ico">🤝</div><h3>QUERO VISITAR</h3><p>Cadastre sua visita e permita que nossa equipe acolha você.</p></div>
+                <div class="igreja-online-card" onclick="abrirSistemaIgreja('membro')"><div class="ico">👥</div><h3>ÁREA DE MEMBROS</h3><p>Solicitação de cadastro e atualização de dados de membros.</p></div>
+                <div class="igreja-online-card" onclick="abrirSistemaIgreja('eventos')"><div class="ico">📅</div><h3>EVENTOS</h3><p>Programação, encontros, cultos especiais e galerias.</p></div>
+                <div class="igreja-online-card" onclick="abrirSistemaIgreja('login')"><div class="ico">🔐</div><h3>CENTRAL DA IGREJA</h3><p>Acesso Master, Admin e Auxiliar com permissões reais.</p></div>
+            </div>
+            <div id="statusBancoPagina" class="status-banco">Verificando conexão segura com o banco de dados...</div>
+        </section>
+
+
+        <!-- ======================================================
+             RODAPÉ ORIGINAL
+             ====================================================== -->
+
+        <footer
+            class="rodape-contato"
+            style="width:100%;">
+
+            <div
+                class="footer-col"
+                style="
+                text-align:center;
+                margin-bottom:25px;">
+
+                <h4>
+                    Conexão Direta
+                </h4>
+					<h4>
+					Entre em contato conosco
+				</h4> 
+Clicando nos ícones abaixo				
+			   <div
+                    class="linha-divisoria"
+                    style="margin:20px auto;">
+						<h4>
+					
+				</h4>
+                </div>
+
+				
+                    
+                </h4>
+
+
+
+
+                <p>
+                    Nos acompanhe, veja as novidades seguindo nossas redes:
+                </p>
+
+            </div>
+
+
+            <div class="icones-redes">
+
+
+                <!-- TELEFONE -->
+
+                <a
+                    href="tel:+558196911810"
+                    class="icone-flutuante"
+                    title="Ligar">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2
+                        19.79 19.79 0 0 1-8.63-3.07
+                        19.5 19.5 0 0 1-6-6
+                        19.79 19.79 0 0 1-3.07-8.67
+                        A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2
+                        1.72 12.84 12.84 0 0 0 .7 2.81
+                        2 2 0 0 1-.45 2.11L8.09 9.91
+                        a16 16 0 0 0 6 6l1.27-1.27
+                        a2 2 0 0 1 2.11-.45
+                        12.84 12.84 0 0 0 2.81.7
+                        A2 2 0 0 1 22 16.92z">
+                        </path>
+
+                    </svg>
+
+                </a>
+
+
+                <!-- WHATSAPP -->
+
+                <a
+                    href="https://wa.me/558196911810"
+                    target="_blank"
+                    class="icone-flutuante"
+                    title="WhatsApp">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8
+                        8.5 8.5 0 0 1-7.6 4.7
+                        8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7
+                        a8.38 8.38 0 0 1-.9-3.8
+                        8.5 8.5 0 0 1 4.7-7.6
+                        8.38 8.38 0 0 1 3.8-.9h.5
+                        a8.48 8.48 0 0 1 8 8v.5z">
+                        </path>
+
+                    </svg>
+
+                </a>
+
+
+                <!-- INSTAGRAM -->
+
+                <a
+                    href="https://www.instagram.com/ipecandeias?igsi=MTkyOWR3cXY5b3pqbg=="
+                    target="_blank"
+                    class="icone-flutuante"
+                    title="Instagram">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <rect
+                            x="2"
+                            y="2"
+                            width="20"
+                            height="20"
+                            rx="5"
+                            ry="5">
+                        </rect>
+
+                        <path
+                            d="M16 11.37A4 4 0 1 1
+                            12.63 8 4 4 0 0 1 16 11.37z">
+                        </path>
+
+                        <line
+                            x1="17.5"
+                            y1="6.5"
+                            x2="17.51"
+                            y2="6.5">
+                        </line>
+
+                    </svg>
+
+                </a>
+
+
+                <!-- FACEBOOK -->
+
+                <a
+                    href="https://www.facebook.com/share/198F4y8DWS/"
+                    target="_blank"
+                    class="icone-flutuante"
+                    title="Facebook">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <path
+                            d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7
+                            a1 1 0 0 1 1-1h3z">
+                        </path>
+
+                    </svg>
+
+                </a>
+
+            </div>
+
+
+            <!-- ENDEREÇO ORIGINAL -->
+
+            <a
+                href="https://maps.app.goo.gl/tGr6gjR8FjmawNKz9"
+                target="_blank"
+                class="botao-endereco"
+                title="Abrir no Google Maps">
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round">
+
+                    <path
+                        d="M21 10c0 7-9 13-9 13s-9-6-9-13
+                        a9 9 0 0 1 18 0z">
+                    </path>
+
+                    <circle
+                        cx="12"
+                        cy="10"
+                        r="3">
+                    </circle>
+
+                </svg>
+
+                <span>
+
+                    Clique aqui para acessar o GPS
+
+                    <br><br>
+
+                    Av. Pres. Castelo Branco, 5683 -
+                    Candeias, Jaboatão dos Guararapes -
+                    PE, 54440-055
+
+                </span>
+
+            </a>
+
+            <br><br>
+
+            <div class="sobre-nos-rodape">
+
+                <p>
+                    Igreja Peregrinos do Evangelho
+                </p>
+
+                <p style="margin-top:5px;">
+
+                    ©
+                    <span id="currentYear"></span>
+                    Todos os direitos reservados.
+
+                </p>
+
+            </div>
+
+        </footer>
+
+    </main>
+
+
+    <!-- ==========================================================
+         BOTÃO FLUTUANTE
+         ========================================================== -->
+
+    <button
+        class="botao-flutuante-menu"
+        onclick="voltarInicio()"
+        title="Voltar ao início">
+
+        ↑
+
+    </button>
+
+
+    <!-- ==========================================================
+         OVERLAY DAS APRESENTAÇÕES
+         ========================================================== -->
+
+    <div
+        class="apresentacao-overlay"
+        id="overlay">
+
+
+        <div class="barra-progresso-container">
+
+            <div
+                class="barra-progresso"
+                id="barra-progresso">
+            </div>
+
+        </div>
+
+
+        <button
+            class="btn-fechar"
+            onclick="fecharApresentacao()">
+
+            ✖
+
+        </button>
+
+
+        <div id="container-cards"></div>
+
+
+        <div class="controles">
+
+            <button
+                class="btn-controle"
+                onclick="slideAnterior()">
+
+                ◀ Voltar
+
+            </button>
+
+            <button
+                class="btn-controle"
+                id="btn-play-pause"
+                onclick="pausarPlay()">
+
+                ❚❚ Pausar
+
+            </button>
+
+            <button
+                class="btn-controle"
+                onclick="proximoSlide()">
+
+                Seguir ▶
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==========================================================
+         SISTEMA ONLINE / BANCO DE DADOS
+         ========================================================== -->
+    <div class="sistema-overlay" id="sistema-overlay">
+        <div class="sistema-box">
+            <div class="sistema-topo">
+                <div><h2 id="sistema-titulo">CENTRAL DA IGREJA</h2><p id="sistema-subtitulo" style="color:#aaa;margin-top:6px"></p></div>
+                <button class="sistema-fechar" onclick="fecharSistemaIgreja()">✕ FECHAR</button>
+            </div>
+            <div id="sistema-conteudo"></div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- ==========================================================
+         JAVASCRIPT
+         ========================================================== -->
+
+    <script>
+
+        /* ==========================================================
+           ANO
+           ========================================================== */
+
+        document.getElementById('currentYear').textContent =
+            new Date().getFullYear();
+
+
+        /* ==========================================================
+           SPLASH ORIGINAL
+           ========================================================== */
+
+        window.addEventListener('DOMContentLoaded', () => {
+
+            const splash =
+                document.getElementById('splash-screen');
+
+            const videoIntro =
+                document.getElementById('splash-video');
+
+            const secaoSobreNos =
+                document.getElementById('sobre-nos-secao');
+
+            if (videoIntro && splash) {
+
+                const finalizarIntro = () => {
+
+                    splash.style.opacity = '0';
+                    splash.style.visibility = 'hidden';
+
+                    setTimeout(() => {
+
+                        if (document.getElementById('splash-screen')) {
+                            splash.remove();
+                        }
+
+                        if (secaoSobreNos) {
+                            secaoSobreNos.classList.add('ativo');
+                        }
+
+                    }, 1500);
+
+                };
+
+                videoIntro.addEventListener(
+                    'ended',
+                    finalizarIntro
+                );
+
+                setTimeout(() => {
+
+                    if (
+                        document.getElementById('splash-screen')
+                    ) {
+
+                        finalizarIntro();
+
+                    }
+
+                }, 6500);
+
+            } else {
+
+                if (secaoSobreNos) {
+
+                    setTimeout(() => {
+
+                        secaoSobreNos.classList.add('ativo');
+
+                    }, 500);
+
+                }
+
+            }
+
+        });
+
+
+        /* ==========================================================
+           PARTÍCULAS
+           ========================================================== */
+
+        const canvas =
+            document.getElementById('particulas');
+
+        const ctx =
+            canvas.getContext('2d');
+
+        let particulas = [];
+
+        function ajustarCanvas() {
+
+            canvas.width =
+                window.innerWidth;
+
+            canvas.height =
+                window.innerHeight;
+
+        }
+
+        function criarParticulas() {
+
+            particulas = [];
+
+            const quantidade =
+                Math.min(
+                    100,
+                    Math.floor(window.innerWidth / 12)
+                );
+
+            for (let i = 0; i < quantidade; i++) {
+
+                particulas.push({
+
+                    x: Math.random() *
+                        canvas.width,
+
+                    y: Math.random() *
+                        canvas.height,
+
+                    tamanho:
+                        Math.random() * 1.7 + .3,
+
+                    velocidade:
+                        Math.random() * .35 + .08,
+
+                    opacidade:
+                        Math.random() * .6 + .1
+
+                });
+
+            }
+
+        }
+
+        function desenharParticulas() {
+
+            ctx.clearRect(
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
+
+            particulas.forEach(p => {
+
+                p.y -= p.velocidade;
+
+                if (p.y < 0) {
+                    p.y = canvas.height;
+                    p.x = Math.random() * canvas.width;
+                }
+
+                ctx.beginPath();
+
+                ctx.arc(
+                    p.x,
+                    p.y,
+                    p.tamanho,
+                    0,
+                    Math.PI * 2
+                );
+
+                ctx.fillStyle =
+                    `rgba(255,255,255,${p.opacidade})`;
+
+                ctx.fill();
+
+            });
+
+            requestAnimationFrame(
+                desenharParticulas
+            );
+
+        }
+
+        ajustarCanvas();
+        criarParticulas();
+        desenharParticulas();
+
+        window.addEventListener(
+            'resize',
+            () => {
+
+                ajustarCanvas();
+                criarParticulas();
+
+            }
+        );
+
+
+        /* ==========================================================
+           REVELAÇÃO DAS NOVAS SEÇÕES
+           ========================================================== */
+
+        const observador =
+            new IntersectionObserver(
+                entradas => {
+
+                    entradas.forEach(entrada => {
+
+                        if (entrada.isIntersecting) {
+
+                            entrada.target.classList.add(
+                                'visivel'
+                            );
+
+                        }
+
+                    });
+
+                },
+                {
+                    threshold: .15
+                }
+            );
+
+        document
+            .querySelectorAll('.revelar')
+            .forEach(elemento => {
+
+                observador.observe(elemento);
+
+            });
+
+
+        /* ==========================================================
+           NAVEGAÇÃO
+           ========================================================== */
+
+        function irPara(id) {
+
+            const elemento =
+                document.getElementById(id);
+
+            if (!elemento) return;
+
+            elemento.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+
+        }
+
+        function voltarInicio() {
+
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+
+        }
+
+
+        /* ==========================================================
+           MENU MOBILE
+           ========================================================== */
+
+        function alternarMenuMobile() {
+
+            const menu =
+                document.getElementById('menu-mobile');
+
+            menu.classList.toggle('aberto');
+
+        }
+
+        function fecharMenuMobile() {
+
+            document
+                .getElementById('menu-mobile')
+                .classList.remove('aberto');
+
+        }
+
+
+        /* ==========================================================
+           DADOS ORIGINAIS — PILARES
+           ========================================================== */
+
+        const dadosPilares = [
+
+            {
+                titulo: "PRIMEIRO PILAR",
+                subtitulo: "Somente a Graça",
+                texto1:
+                    "Porque pela graça vocês são salvos, mediante a fé; e isto não vem de vocês, é dom de Deus; não de obras, para que ninguém se glorie. (Efésios 2:8-9)",
+                texto2:
+                    "\"A graça é dada não porque fizemos boas obras, mas para que possamos ser capazes de realizá-las\". (Santo Agostinho)",
+                ref:
+                    "Jo.1.14; At.15.11 e 20.24; Rm.11.6; IICo.12.9; IITm.2.1; Tt.2.11 e Hb.4.16"
+            },
+
+            {
+                titulo: "SEGUNDO PILAR",
+                subtitulo: "Somente a Fé",
+                texto1:
+                    "Ora, a fé é a certeza de coisas que se esperam, a convicção de fatos que não se veem. (Hebreus 11:1)",
+                texto2:
+                    "A fé sobe pelas escadas que o amor construiu, e olha pelas janelas que a esperança abriu. (Charles Spurgeon)",
+                ref:
+                    "Mt. 9.2; 15.28 e 17.20; Rm. 10.17; 2Co.5.7; Ef.2.8-9 e 6.16; Hb.11.8; 1Jo.5.4; 2Tm.4.7 e 1Pe.5.9"
+            },
+
+            {
+                titulo: "TERCEIRO PILAR",
+                subtitulo: "Somente Cristo",
+                texto1:
+                    "De novo, Jesus lhes falou, dizendo: — Eu sou a luz do mundo. Quem me segue não andará nas trevas; pelo contrário, terá a luz da vida. João 8:12",
+                texto2:
+                    "Uma masmorra com Cristo é um trono, e um trono sem Cristo é um inferno. (Martinho Lutero)",
+                ref:
+                    "Jo. 6.35,51; 8.12; 9.5; 10.7,9; 10.11,14; 11.25-26; 14.6-7; 15.1,5; Mt.17.5; Cl.2.9; Hb.11.1-4 e Ap. 22.13"
+            },
+
+            {
+                titulo: "QUARTO PILAR",
+                subtitulo: "Somente o Espírito Santo",
+                texto1:
+                    "Mas vocês receberão poder, ao descer sobre vocês o Espírito Santo, e serão minhas testemunhas tanto em Jerusalém como em toda a Judeia e Samaria e até os confins da terra. Atos 1:8",
+                texto2:
+                    "O Espírito Santo deveria ter o supremo lugar de honra como Ele tinha nos atos dos apóstolos. (Andrew Murray)",
+                ref:
+                    "Gn.1.1-2; Sl.51.11; Is. 61.1-4; Jo. 14.16; 16.13; At. 2.3-4; Rm. 15.13; ICo. 6.19-20; Ap. 22.17"
+            },
+
+            {
+                titulo: "QUINTO PILAR",
+                subtitulo: "Somente as Escrituras",
+                texto1:
+                    "Lâmpada para os meus pés é a tua palavra; ela é luz para os meus caminhos. Salmos 119:105",
+                texto2:
+                    "A autoridade da Escritura Sagrada, razão pela qual deve ser crida e obedecida, não depende do testemunho de qualquer homem ou igreja, mas depende somente de Deus que é o seu Autor; tem, portanto, de ser recebida, porque é a Palavra de Deus. (Confissão de fé de Westminster I.IV)",
+                ref:
+                    "Sl.33.4; 56.4; 119.130; Is. 40.6-8; Mt.24.35; Lc.11.28; IITm. 3.16-17; Hb. 4.12 e Tg. 1.22"
+            },
+
+            {
+                titulo: "SEXTO PILAR",
+                subtitulo: "Somente a Deus a Glória",
+                texto1:
+                    "Porque a terra se encherá do conhecimento da glória do Senhor , como as águas cobrem o mar.” Habacuque 2:14",
+                texto2:
+                    "Você existe e o universo existe para demonstrar a grandeza e a glória de Deus. (John Piper)",
+                ref:
+                    "Dt.5.24; Ez.8.4; Sl.3.3; 19.1; 115.1; ICr.16.28; Is.42.8; 60.1; ICo.10.31; IICo.10.17; Fl.2.9-11; Hb.1.3; Ap.19.1; 21.10-11"
+            }
+
+        ];
+
+
+        /* ==========================================================
+           DADOS ORIGINAIS — DÍZIMOS
+           ========================================================== */
+
+        const dadosDizimos = [
+
+            {
+                titulo: "DÍZIMOS E OFERTAS",
+                subtitulo: "PRECISAMOS DE VOCÊ!",
+                texto1:
+                    "CONTRIBUA COM A MANUTENÇÃO E OBRAS DA NOSSA IGREJA.",
+                texto2:
+                    "FAÇA SUA OFERTA:<br><br><strong>Banco Bradesco</strong><br>Ag: 1232 | C/C: 87687-9<br>CNPJ: 12.387.103/0001-35",
+                ref:
+                    "PIX: 12.387.103/0001-35"
+            }
+
+        ];
+
+
+        /* ==========================================================
+           CREDO ORIGINAL
+           ========================================================== */
+
+        const textoCredo =
+            "Cremos em Deus Pai, todo-poderoso, criador do céu e da terra; e em Jesus Cristo, seu Filho Unigênito, nosso Senhor, que foi concebido pelo Espírito Santo, nascido da virgem Maria, padeceu sob Pôncio Pilatos, foi crucificado, morto e sepultado. Ele desceu ao Hades. No terceiro dia, ressuscitou da morte. Ascendeu ao céu, e está assentado à destra de Deus Pai Todo-Poderoso, de onde virá para julgar os vivos e os mortos, Cremos no Espírito Santo, na santa igreja cristā, na comunhāo dos santos, no perdão dos pecados, na ressurreição do corpo e na vida eterna. Amém!";
+
+
+        /* ==========================================================
+           CONTROLE DAS APRESENTAÇÕES
+           ========================================================== */
+
+        let slideAtual = 0;
+
+        let dadosAtuais = [];
+
+        let timer;
+
+        let tempoTotal = 20000;
+
+        let tempoRestante = 20000;
+
+        let pausado = false;
+
+        let tempoInicio;
+
+        let intervaloCredo;
+
+
+        const overlay =
+            document.getElementById('overlay');
+
+        const containerCards =
+            document.getElementById('container-cards');
+
+        const barraProgresso =
+            document.getElementById('barra-progresso');
+
+        const btnPlayPause =
+            document.getElementById('btn-play-pause');
+
+
+        /* ==========================================================
+           ABRIR APRESENTAÇÃO ORIGINAL
+           ========================================================== */
+
+        function abrirApresentacao(tipo) {
+
+            document
+                .querySelector('.controles')
+                .style.display = 'flex';
+
+            document
+                .querySelector('.barra-progresso-container')
+                .style.display = 'block';
+
+            if (tipo === 'pilares') {
+                dadosAtuais = dadosPilares;
+            }
+
+            if (tipo === 'dizimos') {
+                dadosAtuais = dadosDizimos;
+            }
+
+            slideAtual = 0;
+
+            pausado = false;
+
+            tempoRestante = tempoTotal;
+
+            btnPlayPause.innerHTML =
+                "❚❚ Pausar";
+
+            overlay.classList.add('aberto');
+
+            document.body.classList.add('modal-aberto');
+
+            renderizarSlide();
+
+        }
+
+
+        /* ==========================================================
+           CREDO ORIGINAL
+           ========================================================== */
+
+        function abrirCredo() {
+
+            clearTimeout(timer);
+
+            clearInterval(intervaloCredo);
+
+            document
+                .querySelector('.controles')
+                .style.display = 'none';
+
+            document
+                .querySelector('.barra-progresso-container')
+                .style.display = 'none';
+
+            overlay.classList.add('aberto');
+
+            document.body.classList.add('modal-aberto');
+
+            const palavras =
+                textoCredo.split(' ');
+
+            let spansHtml =
+                palavras
+                .map(
+                    (p, i) =>
+                        `<span
+                            id="palavra-${i}"
+                            style="
+                            opacity:0;
+                            transition:
+                            opacity .5s ease;">
+                            ${p}
+                        </span>`
+                )
+                .join(' ');
+
+            const htmlCard = `
+
+                <div
+                    class="card-apresentacao ativo"
+                    id="card-credo">
+
+                    <h2 class="card-titulo">
+                        CREDO APOSTÓLICO
+                    </h2>
+
+                    <div class="card-subtitulo">
+                         Vers. Catequista Nova Cidade. <br> Pg.137. <br> <br> DECLARAÇÃO DE FÉ
+                    </div>
+
+                    <p
+                        class="card-texto"
+                        style="
+                        text-align:justify;
+                        font-size:1.3rem;
+                        line-height:2;">
+
+                        ${spansHtml}
+
+                    </p>
+
+                </div>
+
+            `;
+
+            containerCards.innerHTML =
+                htmlCard;
+
+            let index = 0;
+
+            intervaloCredo =
+                setInterval(() => {
+
+                    if (index < palavras.length) {
+
+                        const span =
+                            document.getElementById(
+                                `palavra-${index}`
+                            );
+
+                        if (span) {
+                            span.style.opacity = 1;
+                        }
+
+                        index++;
+
+                    } else {
+
+                        clearInterval(
+                            intervaloCredo
+                        );
+
+                    }
+
+                }, 400);
+
+        }
+
+
+        /* ==========================================================
+           FECHAR APRESENTAÇÃO
+           ========================================================== */
+
+        function fecharApresentacao() {
+
+            overlay.classList.remove('aberto');
+
+            document.body.classList.remove('modal-aberto');
+
+            clearTimeout(timer);
+
+            clearInterval(intervaloCredo);
+
+            reiniciarAnimacaoBarra();
+
+        }
+
+
+        /* ==========================================================
+           RENDERIZAÇÃO DOS SLIDES
+           ========================================================== */
+
+        function renderizarSlide() {
+
+            containerCards.innerHTML = '';
+
+            if (
+                slideAtual >= dadosAtuais.length
+            ) {
+
+                fecharApresentacao();
+
+                return;
+
+            }
+
+            const dados =
+                dadosAtuais[slideAtual];
+
+            const htmlCard = `
+
+                <div
+                    class="card-apresentacao"
+                    id="card-ativo">
+
+                    <h2 class="card-titulo">
+                        ${dados.titulo}
+                    </h2>
+
+                    <div class="card-subtitulo">
+                        ${dados.subtitulo}
+                    </div>
+
+                    <p class="card-texto">
+                        ${dados.texto1}
+                    </p>
+
+                    <p class="card-texto">
+                        ${dados.texto2}
+                    </p>
+
+                    <div class="card-referencia">
+                        ${dados.ref}
+                    </div>
+
+                </div>
+
+            `;
+
+            containerCards.innerHTML =
+                htmlCard;
+
+            setTimeout(() => {
+
+                const card =
+                    document.getElementById(
+                        'card-ativo'
+                    );
+
+                if (card) {
+                    card.classList.add('ativo');
+                }
+
+            }, 50);
+
+            iniciarTimer();
+
+        }
+
+
+        /* ==========================================================
+           TIMER
+           ========================================================== */
+
+        function iniciarTimer() {
+
+            clearTimeout(timer);
+
+            if (!pausado) {
+
+                reiniciarAnimacaoBarra();
+
+                barraProgresso.style.animationPlayState =
+                    'running';
+
+                tempoInicio =
+                    Date.now();
+
+                timer =
+                    setTimeout(
+                        () => {
+                            proximoSlide();
+                        },
+                        tempoRestante
+                    );
+
+            }
+
+        }
+
+
+        function reiniciarAnimacaoBarra() {
+
+            barraProgresso.classList.remove(
+                'animar-barra'
+            );
+
+            void barraProgresso.offsetWidth;
+
+            barraProgresso.classList.add(
+                'animar-barra'
+            );
+
+        }
+
+
+        function proximoSlide() {
+
+            slideAtual++;
+
+            tempoRestante =
+                tempoTotal;
+
+            renderizarSlide();
+
+        }
+
+
+        function slideAnterior() {
+
+            if (slideAtual > 0) {
+
+                slideAtual--;
+
+                tempoRestante =
+                    tempoTotal;
+
+                renderizarSlide();
+
+            }
+
+        }
+
+
+        function pausarPlay() {
+
+            if (pausado) {
+
+                pausado = false;
+
+                btnPlayPause.innerHTML =
+                    "❚❚ Pausar";
+
+                barraProgresso.style.animationPlayState =
+                    'running';
+
+                tempoInicio =
+                    Date.now();
+
+                timer =
+                    setTimeout(
+                        () => {
+                            proximoSlide();
+                        },
+                        tempoRestante
+                    );
+
+            } else {
+
+                pausado = true;
+
+                btnPlayPause.innerHTML =
+                    "▶ Seguir";
+
+                barraProgresso.style.animationPlayState =
+                    'paused';
+
+                clearTimeout(timer);
+
+                let tempoDecorrido =
+                    Date.now() - tempoInicio;
+
+                tempoRestante =
+                    tempoRestante -
+                    tempoDecorrido;
+
+                if (tempoRestante < 0) {
+                    tempoRestante = 0;
+                }
+
+            }
+
+        }
+
+
+        /* ==========================================================
+           TELAS EXTRAS
+           ========================================================== */
+
+        function abrirTelaExtra(tipo) {
+
+            document
+                .querySelector('.controles')
+                .style.display = 'none';
+
+            document
+                .querySelector('.barra-progresso-container')
+                .style.display = 'none';
+
+            let titulo = '';
+
+            let subtitulo = '';
+
+            let conteudo = '';
+
+            if (tipo === 'fe') {
+
+                titulo = 'NOSSA FÉ';
+
+                subtitulo =
+                    'Aquilo que cremos';
+
+                conteudo = `
+
+                    <p class="card-texto">
+                        Nossa fé está fundamentada na Palavra
+                        de Deus e centrada em Jesus Cristo.
+                    </p>
+
+                    <p class="card-texto">
+                        Cremos na autoridade das Escrituras,
+                        na graça de Deus, na salvação pela fé
+                        em Cristo e na ação do Espírito Santo.
+                    </p>
+
+                    <p class="card-texto">
+                        Nossa identidade está expressa nos
+                        seis pilares apresentados nesta página:
+                        somente a graça, somente a fé,
+                        somente Cristo, somente o Espírito Santo,
+                        somente as Escrituras e somente a Deus
+                        a glória.
+                    </p>
+
+                    <div class="card-referencia">
+                        SOLI DEO GLORIA
+                    </div>
+
+                `;
+
+            }
+
+
+            if (tipo === 'evangelho') {
+
+                titulo = 'O EVANGELHO';
+
+                subtitulo =
+                    'A boa notícia de Jesus Cristo';
+
+                conteudo = `
+
+                    <p class="card-texto">
+                        O Evangelho é a boa notícia de que
+                        Deus, por sua graça, oferece salvação
+                        por meio de Jesus Cristo.
+                    </p>
+
+                    <p class="card-texto">
+                        O ser humano é chamado ao arrependimento
+                        e à fé, reconhecendo Jesus Cristo como
+                        Senhor e Salvador.
+                    </p>
+
+                    <p class="card-texto">
+                        A mensagem cristã não termina apenas
+                        no momento da conversão. Somos chamados
+                        a viver diariamente como discípulos de
+                        Cristo, amando a Deus e ao próximo.
+                    </p>
+
+                    <div class="card-referencia">
+                        "EU SOU O CAMINHO, A VERDADE E A VIDA."
+                        <br>
+                        João 14:6
+                    </div>
+
+                `;
+
+            }
+
+
+            if (tipo === 'vida') {
+
+                titulo = 'VIDA CRISTÃ';
+
+                subtitulo =
+                    'Caminhando com Cristo';
+
+                conteudo = `
+
+                    <p class="card-texto">
+                        A vida cristã é uma caminhada de fé,
+                        crescimento, comunhão, serviço e
+                        transformação pela Palavra de Deus.
+                    </p>
+
+                    <p class="card-texto">
+                        Somos chamados a buscar uma vida de
+                        oração, estudo das Escrituras,
+                        comunhão com a igreja e testemunho
+                        do Evangelho.
+                    </p>
+
+                    <p class="card-texto">
+                        Não caminhamos sozinhos.
+                        A igreja é uma comunidade onde
+                        aprendemos, servimos, cuidamos uns
+                        dos outros e glorificamos a Deus.
+                    </p>
+
+                    <div class="card-referencia">
+                        "ANDAI NELE."
+                        <br>
+                        Colossenses 2:6
+                    </div>
+
+                `;
+
+            }
+
+
+            if (tipo === 'ministerios') {
+
+                titulo = 'MINISTÉRIOS';
+
+                subtitulo =
+                    'Servindo a Deus e ao próximo';
+
+                conteudo = `
+
+                    <p class="card-texto">
+                        A igreja é formada por pessoas chamadas
+                        para servir a Deus e edificar umas às
+                        outras.
+                    </p>
+
+                    <p class="card-texto">
+                        Os ministérios existem para contribuir
+                        com a missão da igreja, cuidar das pessoas,
+                        fortalecer a comunhão e anunciar o
+                        Evangelho.
+                    </p>
+
+                    <div class="grade-info">
+
+                        <div class="bloco-info">
+
+                            <h3>
+                                ADORAÇÃO
+                            </h3>
+
+                            <p>
+                                Servir através da música,
+                                louvor e condução da igreja
+                                à adoração.
+                            </p>
+
+                        </div>
+
+                        <div class="bloco-info">
+
+                            <h3>
+                                ENSINO
+                            </h3>
+
+                            <p>
+                                Incentivar o conhecimento
+                                das Escrituras e o crescimento
+                                espiritual.
+                            </p>
+
+                        </div>
+
+                        <div class="bloco-info">
+
+                            <h3>
+                                COMUNHÃO
+                            </h3>
+
+                            <p>
+                                Promover relacionamentos,
+                                cuidado e integração.
+                            </p>
+
+                        </div>
+
+                        <div class="bloco-info">
+
+                            <h3>
+                                MISSÃO
+                            </h3>
+
+                            <p>
+                                Anunciar o Evangelho e servir
+                                pessoas dentro e fora da igreja.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+
+
+            if (tipo === 'cultos') {
+
+                titulo = 'CULTOS';
+
+                subtitulo =
+                    'Um lugar para adorar a Deus';
+
+                conteudo = `
+
+                    <p class="card-texto">
+                        Venha participar conosco.
+                        Nossas portas estão abertas para
+                        você e sua família.
+                    </p>
+
+                    <div class="cultos-grid">
+
+                        <div class="culto-card">
+
+                            <div class="culto-dia">
+                                DOMINGOS
+                            </div>
+
+                            <div class="culto-hora">
+                                10h e 18h
+                            </div>
+
+                            <p>
+                                Culto e Adoração.
+                            </p>
+
+                        </div>
+
+                        <div class="culto-card">
+
+                            <div class="culto-dia">
+                                QUARTAS-FEIRAS
+                            </div>
+
+                            <div class="culto-hora">
+                                19h30
+                            </div>
+
+                            <p>
+                              JARDIM DE ORAÇÃO <br>  Culto, Libertação, Crescimento e Comunhão. 
+                            </p>
+
+                        </div>
+						
+					</div>
+
+                    <br>
+
+                    <p class="card-texto">
+                        Esperamos por você.
+                    </p>
+
+                `;
+
+            }
+
+
+            if (tipo === 'serenidade') {
+
+                titulo = 'ORAÇÃO DA SERENIDADE';
+
+               
+
+                conteudo = `
+
+                    <p class="card-texto" style="text-align: center;">
+                        Concedei-nos, Senhor, a serenidade necessária para aceitar as coisas que não podemos modificar, coragem para modificar aquelas que podemos e sabedoria para distinguir uma das outras.
+                    </p>
+
+                `;
+
+            }
+
+
+            if (tipo === 'biblia') {
+
+                titulo = 'BÍBLIA SAGRADA';
+
+                subtitulo =
+                    'Antigo e Novo Testamento';
+
+                const opcoesLivros = LIVROS_BIBLIA
+                    .map((livro, indice) =>
+                        `<option value="${indice}">${livro[1]}</option>`
+                    )
+                    .join('');
+
+                conteudo = `
+
+                    <div class="biblia-aviso">
+                        Esta área faz consulta online da Bíblia. Nenhum histórico,
+                        cadastro ou dado pessoal é armazenado neste aparelho.
+                    </div>
+
+                    <div class="bible-toolbar">
+                        <select id="bibliaLivro" onchange="atualizarCapitulosBiblia()">
+                            ${opcoesLivros}
+                        </select>
+
+                        <select id="bibliaCapitulo"></select>
+
+                        <button class="btn-controle" onclick="consultarBiblia()">
+                            LER CAPÍTULO
+                        </button>
+                    </div>
+
+                    <div class="bible-toolbar" style="grid-template-columns:1fr auto;">
+                        <input id="bibliaBusca" placeholder="Ex.: João 3:16 ou Salmos 23">
+
+                        <button class="btn-controle" onclick="buscarReferenciaBiblia()">
+                            BUSCAR
+                        </button>
+                    </div>
+
+                    <div id="bibliaResultado" class="bible-resultado">
+                        “Que a Palavra de Deus fale ao seu coração.”
+                        <br><br>
+                        Selecione um livro e capítulo para iniciar a leitura.
+                    </div>
+
+                `;
+
+            }
+
+
+            if (tipo === 'oracao') {
+
+                titulo = 'PEDIDOS DE ORAÇÃO';
+
+                subtitulo =
+                    'Podemos orar por você';
+
+                conteudo = `
+
+                    <p class="card-texto">
+                        A oração é uma expressão de nossa
+                        dependência de Deus.
+                    </p>
+
+                    <p class="card-texto">
+                        Se existe algo pelo qual você gostaria
+                        que a igreja orasse, utilize o espaço
+                        abaixo.
+                    </p>
+
+                    <form
+                        class="formulario"
+                        onsubmit="enviarPedidoOracao(event)">
+
+                        <div class="campo">
+
+                            <label>
+                                Seu nome
+                            </label>
+
+                            <input
+                                id="nomeOracao"
+                                type="text"
+                                required
+                                placeholder="Digite seu nome">
+
+                        </div>
+
+                        <div class="campo">
+
+                            <label>
+                                Pedido de oração
+                            </label>
+
+                            <textarea
+                                id="pedidoOracao"
+                                required
+                                placeholder="Digite seu pedido...">
+                            </textarea>
+
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="botao-neon">
+
+                            ENVIAR PEDIDO
+
+                        </button>
+
+                        <div
+                            class="mensagem-formulario"
+                            id="mensagemOracao">
+
+                            Seu pedido foi preparado.
+                            Ao clicar em enviar, você será
+                            direcionado ao WhatsApp da igreja.
+
+                        </div>
+
+                    </form>
+
+                `;
+
+            }
+
+
+            if (tipo === 'contato') {
+
+                titulo = 'FALE CONOSCO';
+
+                subtitulo =
+                    'Estamos à disposição';
+
+                conteudo = `
+
+                    <p class="card-texto">
+                        Será uma alegria receber você e sua família.
+                    </p>
+
+                    <div class="grade-info">
+
+                        <div class="bloco-info">
+
+                            <h3>
+                                WHATSAPP
+                            </h3>
+
+                            <p>
+                                Entre em contato diretamente
+                                com a igreja.
+                            </p>
+
+                            <br>
+
+                            <button
+                                class="botao-neon"
+                                onclick="
+                                window.open(
+                                'https://wa.me/558196911810',
+                                '_blank')">
+
+                                WHATSAPP
+
+                            </button>
+
+                        </div>
+
+
+                        <div class="bloco-info">
+
+                            <h3>
+                                LOCALIZAÇÃO
+                            </h3>
+
+                            <p>
+                                Av. Pres. Castelo Branco,
+                                5683 - Candeias,
+                                Jaboatão dos Guararapes -
+                                PE, 54440-055
+                            </p>
+
+                            <br>
+
+                            <button
+                                class="botao-neon"
+                                onclick="
+                                window.open(
+                                'https://maps.app.goo.gl/tGr6gjR8FjmawNKz9',
+                                '_blank')">
+
+                                ABRIR GPS
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <br><br>
+
+                    <div class="card-referencia">
+                        IGREJA PEREGRINOS DO EVANGELHO
+                    </div>
+
+                `;
+
+            }
+
+
+            const htmlCard = `
+
+                <div
+                    class="card-apresentacao ativo">
+
+                    <h2 class="card-titulo">
+                        ${titulo}
+                    </h2>
+
+                    <div class="card-subtitulo">
+                        ${subtitulo}
+                    </div>
+
+                    ${conteudo}
+
+                </div>
+
+            `;
+
+            containerCards.innerHTML =
+                htmlCard;
+
+            overlay.classList.add('aberto');
+
+            document.body.classList.add('modal-aberto');
+
+            if (tipo === 'biblia') {
+                setTimeout(atualizarCapitulosBiblia, 0);
+            }
+
+        }
+
+
+        /* ==========================================================
+           BÍBLIA SAGRADA ONLINE — SEM ARMAZENAMENTO LOCAL
+           ========================================================== */
+
+        const LIVROS_BIBLIA = [
+            ['GEN','Gênesis',50],['EXO','Êxodo',40],['LEV','Levítico',27],['NUM','Números',36],['DEU','Deuteronômio',34],['JOS','Josué',24],['JDG','Juízes',21],['RUT','Rute',4],['1SA','1 Samuel',31],['2SA','2 Samuel',24],['1KI','1 Reis',22],['2KI','2 Reis',25],['1CH','1 Crônicas',29],['2CH','2 Crônicas',36],['EZR','Esdras',10],['NEH','Neemias',13],['EST','Ester',10],['JOB','Jó',42],['PSA','Salmos',150],['PRO','Provérbios',31],['ECC','Eclesiastes',12],['SNG','Cantares',8],['ISA','Isaías',66],['JER','Jeremias',52],['LAM','Lamentações',5],['EZK','Ezequiel',48],['DAN','Daniel',12],['HOS','Oséias',14],['JOL','Joel',3],['AMO','Amós',9],['OBA','Obadias',1],['JON','Jonas',4],['MIC','Miquéias',7],['NAM','Naum',3],['HAB','Habacuque',3],['ZEP','Sofonias',3],['HAG','Ageu',2],['ZEC','Zacarias',14],['MAL','Malaquias',4],
+            ['MAT','Mateus',28],['MRK','Marcos',16],['LUK','Lucas',24],['JHN','João',21],['ACT','Atos',28],['ROM','Romanos',16],['1CO','1 Coríntios',16],['2CO','2 Coríntios',13],['GAL','Gálatas',6],['EPH','Efésios',6],['PHP','Filipenses',4],['COL','Colossenses',4],['1TH','1 Tessalonicenses',5],['2TH','2 Tessalonicenses',3],['1TI','1 Timóteo',6],['2TI','2 Timóteo',4],['TIT','Tito',3],['PHM','Filemom',1],['HEB','Hebreus',13],['JAS','Tiago',5],['1PE','1 Pedro',5],['2PE','2 Pedro',3],['1JN','1 João',5],['2JN','2 João',1],['3JN','3 João',1],['JUD','Judas',1],['REV','Apocalipse',22]
+        ];
+
+        function escaparHTMLBiblia(texto) {
+            return String(texto ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function atualizarCapitulosBiblia() {
+            const livroSelect = document.getElementById('bibliaLivro');
+            const capituloSelect = document.getElementById('bibliaCapitulo');
+
+            if (!livroSelect || !capituloSelect) return;
+
+            const totalCapitulos = LIVROS_BIBLIA[Number(livroSelect.value)][2];
+
+            capituloSelect.innerHTML = Array
+                .from({ length: totalCapitulos }, (_, i) => `<option value="${i + 1}">${i + 1}</option>`)
+                .join('');
+        }
+
+        async function consultarBiblia() {
+            const livroSelect = document.getElementById('bibliaLivro');
+            const capituloSelect = document.getElementById('bibliaCapitulo');
+            const resultado = document.getElementById('bibliaResultado');
+
+            if (!livroSelect || !capituloSelect || !resultado) return;
+
+            const livro = LIVROS_BIBLIA[Number(livroSelect.value)];
+            const capitulo = capituloSelect.value;
+
+            resultado.textContent = 'Carregando a Palavra...';
+
+            try {
+                const resposta = await fetch(`https://bible-api.com/data/almeida/${livro[0]}/${capitulo}`);
+
+                if (!resposta.ok) throw new Error('Falha na consulta');
+
+                const dados = await resposta.json();
+                const versos = Array.isArray(dados.verses) ? dados.verses : (Array.isArray(dados) ? dados : []);
+
+                const htmlVersos = versos
+                    .map(v => `<span class="versiculo"><sup>${escaparHTMLBiblia(v.verse || v.verse_nr || '')}</sup>${escaparHTMLBiblia(v.text || '')}</span>`)
+                    .join('');
+
+                resultado.innerHTML = `
+                    <h3 style="text-align:left;margin-bottom:16px;">
+                        ${escaparHTMLBiblia(livro[1])} ${escaparHTMLBiblia(capitulo)}
+                    </h3>
+                    ${htmlVersos || 'Não foi possível interpretar este capítulo.'}
+                `;
+
+            } catch (erro) {
+                resultado.textContent = 'Não foi possível consultar a Bíblia agora. Verifique sua conexão com a internet e tente novamente.';
+            }
+        }
+
+        async function buscarReferenciaBiblia() {
+            const busca = document.getElementById('bibliaBusca');
+            const resultado = document.getElementById('bibliaResultado');
+
+            if (!busca || !resultado || !busca.value.trim()) return;
+
+            resultado.textContent = 'Pesquisando...';
+
+            try {
+                const resposta = await fetch(`https://bible-api.com/${encodeURIComponent(busca.value.trim())}?translation=almeida`);
+                const dados = await resposta.json();
+
+                if (!resposta.ok) throw new Error('Referência não encontrada');
+
+                const versos = Array.isArray(dados.verses) ? dados.verses : [];
+
+                resultado.innerHTML = `
+                    <h3 style="text-align:left;margin-bottom:16px;">
+                        ${escaparHTMLBiblia(dados.reference || busca.value)}
+                    </h3>
+                    ${versos.map(v => `<span class="versiculo"><sup>${escaparHTMLBiblia(v.verse)}</sup>${escaparHTMLBiblia(v.text)}</span>`).join('')}
+                `;
+
+            } catch (erro) {
+                resultado.textContent = 'Referência não localizada. Tente, por exemplo: João 3:16 ou Salmos 23.';
+            }
+        }
+
+
+
+        /* ==========================================================
+           BANCO ONLINE — SUPABASE
+           ========================================================== */
+        const SUPABASE_URL = 'https://okwjfwhdoqokkjjbigta.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_rA9HWzu9Jb--TnaOSigO-Q_AaEmgoi0';
+        let bancoIgreja = null;
+        let usuarioIgreja = null;
+        let perfilIgreja = null;
+
+        function bancoConfigurado(){
+            return SUPABASE_URL.startsWith('https://') && !SUPABASE_URL.includes('COLE_AQUI') && SUPABASE_ANON_KEY.length > 40 && !SUPABASE_ANON_KEY.includes('COLE_AQUI');
+        }
+
+        function atualizarStatusBanco(texto, ok=false){
+            const el=document.getElementById('statusBancoPagina');
+            if(!el)return; el.textContent=texto; el.classList.toggle('ok',ok); el.classList.toggle('erro',!ok);
+        }
+
+        async function iniciarBancoIgreja(){
+            if(!bancoConfigurado()){
+                atualizarStatusBanco('Banco online ainda não configurado. Preencha SUPABASE_URL e SUPABASE_ANON_KEY no próprio index.html.',false);
+                return;
+            }
+            try{
+                const fluxoSenhaPendente=(location.hash||'').includes('type=invite')||(location.hash||'').includes('type=recovery')||new URLSearchParams(location.search).get('type')==='invite'||new URLSearchParams(location.search).get('type')==='recovery';
+                bancoIgreja=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+                bancoIgreja.auth.onAuthStateChange((evento)=>{
+                    if(evento==='PASSWORD_RECOVERY')setTimeout(()=>verificarConviteOuRecuperacao(true),0);
+                });
+                const {data,error}=await bancoIgreja.from('eventos').select('id',{count:'exact',head:true});
+                if(error) throw error;
+                atualizarStatusBanco('Banco online conectado. Registros compartilhados entre desktop e mobile.',true);
+                await carregarSessaoIgreja();
+                await verificarConviteOuRecuperacao(fluxoSenhaPendente);
+            }catch(e){
+                console.error(e); atualizarStatusBanco('Não foi possível conectar ao banco. Verifique URL, chave pública, tabelas e políticas RLS.',false);
+            }
+        }
+
+        async function verificarConviteOuRecuperacao(forcar=false){
+            const hash=location.hash||'';
+            const query=new URLSearchParams(location.search);
+            const fluxoSenha=forcar||hash.includes('type=invite')||hash.includes('type=recovery')||query.get('type')==='invite'||query.get('type')==='recovery';
+            if(!fluxoSenha)return;
+            const {data}=await bancoIgreja.auth.getSession();
+            if(!data?.session)return;
+            const o=document.getElementById('sistema-overlay');
+            o.classList.add('aberto'); document.body.classList.add('modal-aberto');
+            setSistema('CADASTRAR NOVA SENHA','Crie sua senha de acesso à Central da Igreja.',`<form class="sistema-form" onsubmit="salvarNovaSenha(event)" style="max-width:520px;margin:auto"><label>Nova senha<input id="novaSenha" type="password" minlength="8" autocomplete="new-password" required></label><label>Confirmar nova senha<input id="confirmarNovaSenha" type="password" minlength="8" autocomplete="new-password" required></label><button class="sistema-btn" type="submit">SALVAR SENHA</button><div id="msgNovaSenha" class="sistema-msg"></div></form>`);
+        }
+
+        async function salvarNovaSenha(e){
+            e.preventDefault(); const senha=document.getElementById('novaSenha').value, confirmar=document.getElementById('confirmarNovaSenha').value, m=document.getElementById('msgNovaSenha'), btn=e.submitter;
+            m.classList.add('show');
+            if(senha!==confirmar){m.textContent='As senhas não são iguais.';return}
+            if(senha.length<8){m.textContent='A senha precisa ter pelo menos 8 caracteres.';return}
+            btn.disabled=true; const {error}=await bancoIgreja.auth.updateUser({password:senha}); btn.disabled=false;
+            if(error){m.textContent='Não foi possível salvar a senha: '+error.message;return}
+            history.replaceState({},document.title,location.pathname); m.textContent='Senha cadastrada com sucesso. Você já pode acessar a Central da Igreja.';
+            setTimeout(()=>renderCentralIgreja(),1200);
+        }
+
+        async function carregarSessaoIgreja(){
+            if(!bancoIgreja)return;
+            const {data}=await bancoIgreja.auth.getSession();
+            usuarioIgreja=data?.session?.user||null;
+            perfilIgreja=null;
+            if(usuarioIgreja){
+                const {data:p}=await bancoIgreja.from('profiles').select('*').eq('id',usuarioIgreja.id).maybeSingle();
+                perfilIgreja=p||null;
+            }
+        }
+
+        function exigirBanco(){
+            if(bancoIgreja)return true;
+            alert('O banco online ainda não está configurado. Insira a URL e a chave pública do Supabase no index.html.');
+            return false;
+        }
+
+        function escaparSistema(v=''){return String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
+        function fmtData(v){if(!v)return ''; try{return new Date(v+'T12:00:00').toLocaleDateString('pt-BR')}catch{return v}}
+        function fmtDataHora(v){if(!v)return ''; try{return new Date(v).toLocaleString('pt-BR')}catch{return v}}
+
+        function abrirSistemaIgreja(tipo){
+            const o=document.getElementById('sistema-overlay'); o.classList.add('aberto'); document.body.classList.add('modal-aberto');
+            if(tipo==='visitante') renderCadastroVisitante();
+            if(tipo==='membro') renderCadastroMembro();
+            if(tipo==='eventos') renderEventosPublicos();
+            if(tipo==='login') renderLoginCentral();
+        }
+        function fecharSistemaIgreja(){document.getElementById('sistema-overlay').classList.remove('aberto');document.body.classList.remove('modal-aberto')}
+        function setSistema(t,s,h){document.getElementById('sistema-titulo').textContent=t;document.getElementById('sistema-subtitulo').textContent=s;document.getElementById('sistema-conteudo').innerHTML=h}
+
+        function renderCadastroVisitante(){
+            setSistema('QUERO VISITAR A IGREJA','Seja bem-vindo. Será uma alegria receber você.',`<form class="sistema-form" onsubmit="salvarVisitante(event)">
+                <div class="sistema-grid"><label>Nome completo<input id="visNome" required></label><label>Telefone / WhatsApp<input id="visTelefone" required></label></div>
+                <div class="sistema-grid"><label>E-mail<input id="visEmail" type="email"></label><label>Bairro / Cidade<input id="visCidade"></label></div>
+                <label>Como conheceu a igreja?<input id="visOrigem"></label><label>Mensagem ou pedido de oração<textarea id="visMensagem"></textarea></label>
+                <label><input id="visInfo" type="checkbox" style="width:auto;margin-right:8px"> Desejo receber informações sobre cultos e eventos.</label>
+                <button class="sistema-btn" type="submit">ENVIAR CADASTRO</button><div id="msgVis" class="sistema-msg"></div></form>`);
+        }
+        async function salvarVisitante(e){e.preventDefault();if(!exigirBanco())return;const btn=e.submitter;btn.disabled=true;
+            const payload={nome:visNome.value.trim(),telefone:visTelefone.value.trim(),email:visEmail.value.trim()||null,cidade:visCidade.value.trim()||null,origem:visOrigem.value.trim()||null,mensagem:visMensagem.value.trim()||null,receber_informacoes:visInfo.checked};
+            const {error}=await bancoIgreja.from('visitantes').insert(payload); const m=document.getElementById('msgVis');m.classList.add('show');m.textContent=error?'Não foi possível enviar: '+error.message:'Cadastro recebido com sucesso. Nossa equipe poderá acessá-lo de qualquer aparelho autorizado.'; if(!error)e.target.reset();btn.disabled=false;
+        }
+
+        function renderCadastroMembro(){
+            setSistema('CADASTRO DE MEMBRO','Os dados são enviados para análise da administração da igreja.',`<form class="sistema-form" onsubmit="salvarMembro(event)">
+                <div class="sistema-grid"><label>Nome completo<input id="memNome" required></label><label>Telefone / WhatsApp<input id="memTelefone" required></label></div>
+                <div class="sistema-grid"><label>E-mail<input id="memEmail" type="email"></label><label>Data de nascimento<input id="memNasc" type="date"></label></div>
+                <label>Endereço<input id="memEndereco"></label><div class="sistema-grid"><label>Ministério<input id="memMinisterio"></label><label>Função / atividade<input id="memFuncao"></label></div>
+                <label>Observações<textarea id="memObs"></textarea></label><button class="sistema-btn" type="submit">ENVIAR PARA APROVAÇÃO</button><div id="msgMem" class="sistema-msg"></div></form>`);
+        }
+        async function salvarMembro(e){e.preventDefault();if(!exigirBanco())return;const btn=e.submitter;btn.disabled=true;const payload={nome:memNome.value.trim(),telefone:memTelefone.value.trim(),email:memEmail.value.trim()||null,data_nascimento:memNasc.value||null,endereco:memEndereco.value.trim()||null,ministerio:memMinisterio.value.trim()||null,funcao:memFuncao.value.trim()||null,observacoes:memObs.value.trim()||null,status:'pendente'};const {error}=await bancoIgreja.from('membros').insert(payload);const m=document.getElementById('msgMem');m.classList.add('show');m.textContent=error?'Não foi possível enviar: '+error.message:'Solicitação enviada e armazenada no banco online para análise.';if(!error)e.target.reset();btn.disabled=false}
+
+        async function renderEventosPublicos(){
+            setSistema('EVENTOS','Programação oficial da Igreja Peregrinos do Evangelho','<div id="listaEventos" class="eventos-publicos"><p>Carregando eventos...</p></div>');
+            if(!exigirBanco())return;const {data,error}=await bancoIgreja.from('eventos').select('*').eq('publicado',true).gte('data',new Date().toISOString().slice(0,10)).order('data').order('horario');const el=document.getElementById('listaEventos');if(error){el.innerHTML='<p>Não foi possível carregar os eventos.</p>';return}if(!data?.length){el.innerHTML='<p>Nenhum evento futuro publicado no momento.</p>';return}el.innerHTML=data.map(ev=>`<article class="evento-publico">${ev.imagem_url?`<img src="${escaparSistema(ev.imagem_url)}" alt="${escaparSistema(ev.titulo)}">`:'<div style="aspect-ratio:16/9;display:grid;place-items:center;background:#111;font-size:2rem">✝</div>'}<div class="conteudo"><h3>${escaparSistema(ev.titulo)}</h3><div class="meta">${fmtData(ev.data)} ${ev.horario?'• '+escaparSistema(ev.horario.slice(0,5)):''}${ev.local?' • '+escaparSistema(ev.local):''}</div><p>${escaparSistema(ev.descricao||'')}</p></div></article>`).join('');
+        }
+
+        async function renderLoginCentral(){
+            await carregarSessaoIgreja(); if(usuarioIgreja){return renderCentralIgreja()}
+            setSistema('CENTRAL DA IGREJA','Acesso restrito a usuários autorizados.',`<form class="sistema-form" onsubmit="loginCentral(event)" style="max-width:520px;margin:auto"><label>E-mail<input id="loginEmail" type="email" required></label><label>Senha<input id="loginSenha" type="password" required></label><button class="sistema-btn" type="submit">ENTRAR</button><div id="msgLogin" class="sistema-msg"></div><p style="color:#888;font-size:.8rem;text-align:center">Contas administrativas são criadas no Supabase Auth e autorizadas pela função cadastrada em profiles.</p></form>`);
+        }
+        async function loginCentral(e){e.preventDefault();if(!exigirBanco())return;const {error}=await bancoIgreja.auth.signInWithPassword({email:loginEmail.value.trim(),password:loginSenha.value});const m=document.getElementById('msgLogin');if(error){m.classList.add('show');m.textContent='Acesso não autorizado: '+error.message;return}await carregarSessaoIgreja();if(!perfilIgreja||!['master','admin','auxiliar'].includes(perfilIgreja.role)){await bancoIgreja.auth.signOut();usuarioIgreja=null;perfilIgreja=null;m.classList.add('show');m.textContent='Sua conta não possui perfil administrativo autorizado.';return}renderCentralIgreja()}
+        async function sairCentral(){if(bancoIgreja)await bancoIgreja.auth.signOut();usuarioIgreja=null;perfilIgreja=null;renderLoginCentral()}
+
+        async function renderCentralIgreja(){
+            if(!perfilIgreja)return renderLoginCentral(); const role=perfilIgreja.role;
+            setSistema('CENTRAL DA IGREJA',`${perfilIgreja.nome||usuarioIgreja.email} • ${role.toUpperCase()}`,`<div style="display:flex;justify-content:flex-end"><button class="sistema-btn sec" onclick="sairCentral()">SAIR</button></div><div id="painelKpis" class="painel-kpis"><div class="kpi"><strong>…</strong><span>Visitantes</span></div></div><div class="painel-tabs"><button onclick="painelModulo('resumo')">Resumo</button><button onclick="painelModulo('visitantes')">Visitantes</button><button onclick="painelModulo('membros')">Membros</button><button onclick="painelModulo('eventos')">Eventos</button><button onclick="painelModulo('oracoes')">Orações</button><button onclick="painelModulo('mensagens')">Mensagens</button><button onclick="painelModulo('relatorios')">Relatórios</button>${role==='master'?'<button onclick="painelModulo(\'usuarios\')">Usuários</button>':''}</div><div id="painelConteudo"></div>`);
+            await carregarKpis(); await painelModulo('resumo');
+        }
+        async function countTabela(t){const {count}=await bancoIgreja.from(t).select('*',{count:'exact',head:true});return count||0}
+        async function carregarKpis(){const vals=await Promise.all(['visitantes','membros','eventos','pedidos_oracao','mensagens'].map(countTabela));const nomes=['Visitantes','Membros','Eventos','Orações','Mensagens'];document.getElementById('painelKpis').innerHTML=vals.map((v,i)=>`<div class="kpi"><strong>${v}</strong><span>${nomes[i]}</span></div>`).join('')}
+        async function painelModulo(mod){const el=document.getElementById('painelConteudo');el.innerHTML='<p>Carregando...</p>';if(mod==='resumo'){el.innerHTML='<div class="sistema-card"><h3>VISÃO GERAL</h3><p>Os números acima são consultados diretamente no banco online. Alterações feitas por usuários autorizados ficam disponíveis para todos os aparelhos imediatamente após nova consulta.</p></div>';return}
+            if(mod==='membros')return painelMembros(); if(mod==='eventos')return painelEventos(); if(mod==='usuarios')return painelUsuarios(); if(mod==='relatorios')return painelRelatorios();
+            const mapa={visitantes:['visitantes','Visitantes'],oracoes:['pedidos_oracao','Pedidos de oração'],mensagens:['mensagens','Mensagens']};const [tab,tit]=mapa[mod]||[];if(!tab)return;const {data,error}=await bancoIgreja.from(tab).select('*').order('created_at',{ascending:false}).limit(100);if(error){el.innerHTML='<p>Sem permissão ou erro: '+escaparSistema(error.message)+'</p>';return}el.innerHTML=`<div class="sistema-card"><h3>${tit}</h3><div class="tabela-wrap"><table class="tabela-sistema"><thead><tr><th>Data</th><th>Nome / assunto</th><th>Contato / status</th><th>Detalhes</th></tr></thead><tbody>${(data||[]).map(r=>`<tr><td>${fmtDataHora(r.created_at)}</td><td>${escaparSistema(r.nome||r.assunto||'-')}</td><td>${escaparSistema(r.telefone||r.email||r.status||'-')}</td><td>${escaparSistema(r.mensagem||r.pedido||r.observacoes||'-')}</td></tr>`).join('')}</tbody></table></div></div>`}
+
+        async function painelMembros(){const el=document.getElementById('painelConteudo');const pode=['master','admin','auxiliar'].includes(perfilIgreja.role);const {data,error}=await bancoIgreja.from('membros').select('*').order('created_at',{ascending:false}).limit(100);if(error){el.innerHTML='<p>Sem permissão ou erro: '+escaparSistema(error.message)+'</p>';return}el.innerHTML=`<div class="sistema-card"><h3>MEMBROS CADASTRADOS</h3><div class="tabela-wrap"><table class="tabela-sistema"><thead><tr><th>Data</th><th>Nome</th><th>Contato</th><th>Status</th>${pode?'<th>Ação</th>':''}</tr></thead><tbody>${(data||[]).map(r=>`<tr><td>${fmtDataHora(r.created_at)}</td><td>${escaparSistema(r.nome||'-')}</td><td>${escaparSistema(r.telefone||r.email||'-')}</td><td>${escaparSistema(r.status||'-')}</td>${pode?`<td><button type="button" class="sistema-btn sec" onclick="editarMembro('${r.id}')">EDITAR</button></td>`:''}</tr>`).join('')}</tbody></table></div></div>`}
+        async function editarMembro(id){const el=document.getElementById('painelConteudo');const {data:r,error}=await bancoIgreja.from('membros').select('*').eq('id',id).single();if(error){el.innerHTML='<p>Erro: '+escaparSistema(error.message)+'</p>';return}el.innerHTML=`<div class="sistema-card"><h3>EDITAR MEMBRO</h3><form class="sistema-form" onsubmit="salvarEdicaoMembro(event,'${r.id}')"><div class="sistema-grid"><label>Nome completo<input id="editMemNome" value="${escaparSistema(r.nome||'')}" required></label><label>Telefone / WhatsApp<input id="editMemTelefone" value="${escaparSistema(r.telefone||'')}" required></label></div><div class="sistema-grid"><label>E-mail<input id="editMemEmail" type="email" value="${escaparSistema(r.email||'')}"></label><label>Data de nascimento<input id="editMemNasc" type="date" value="${escaparSistema(r.data_nascimento||'')}"></label></div><label>Endereço<input id="editMemEndereco" value="${escaparSistema(r.endereco||'')}"></label><div class="sistema-grid"><label>Ministério<input id="editMemMinisterio" value="${escaparSistema(r.ministerio||'')}"></label><label>Função / atividade<input id="editMemFuncao" value="${escaparSistema(r.funcao||'')}"></label></div><label>Status<select id="editMemStatus"><option value="pendente" ${r.status==='pendente'?'selected':''}>Pendente</option><option value="aprovado" ${r.status==='aprovado'?'selected':''}>Aprovado</option><option value="inativo" ${r.status==='inativo'?'selected':''}>Inativo</option></select></label><label>Observações<textarea id="editMemObs">${escaparSistema(r.observacoes||'')}</textarea></label><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="sistema-btn" type="submit">SALVAR ALTERAÇÕES</button><button class="sistema-btn sec" type="button" onclick="painelMembros()">CANCELAR</button></div><div id="msgEditMem" class="sistema-msg"></div></form></div>`}
+        async function salvarEdicaoMembro(e,id){e.preventDefault();const btn=e.submitter;btn.disabled=true;const payload={nome:editMemNome.value.trim(),telefone:editMemTelefone.value.trim(),email:editMemEmail.value.trim()||null,data_nascimento:editMemNasc.value||null,endereco:editMemEndereco.value.trim()||null,ministerio:editMemMinisterio.value.trim()||null,funcao:editMemFuncao.value.trim()||null,status:editMemStatus.value,observacoes:editMemObs.value.trim()||null};const {error}=await bancoIgreja.from('membros').update(payload).eq('id',id);const m=document.getElementById('msgEditMem');m.classList.add('show');m.textContent=error?'Erro: '+error.message:'Cadastro do membro atualizado com sucesso.';btn.disabled=false;if(!error)setTimeout(()=>painelMembros(),600)}
+
+        async function painelEventos(){const el=document.getElementById('painelConteudo');const pode=['master','admin','auxiliar'].includes(perfilIgreja.role);const {data,error}=await bancoIgreja.from('eventos').select('*').order('data',{ascending:false}).limit(100);if(error){el.innerHTML='<p>'+escaparSistema(error.message)+'</p>';return}el.innerHTML=`${pode?`<div class="sistema-card" style="margin-bottom:16px"><h3>NOVO EVENTO</h3><form class="sistema-form" onsubmit="salvarEvento(event)"><div class="sistema-grid"><label>Título<input id="evTitulo" required></label><label>Data<input id="evData" type="date" required></label></div><div class="sistema-grid"><label>Horário<input id="evHora" type="time"></label><label>Local<input id="evLocal"></label></div><label>Descrição<textarea id="evDescricao"></textarea></label><label>Foto do evento<input id="evFoto" type="file" accept="image/*"></label><label><input id="evPublicado" type="checkbox" checked style="width:auto;margin-right:8px"> Publicar para visitantes</label><button class="sistema-btn" type="submit">SALVAR EVENTO</button><div id="msgEv" class="sistema-msg"></div></form></div>`:''}<div class="sistema-card"><h3>EVENTOS CADASTRADOS</h3><div class="tabela-wrap"><table class="tabela-sistema"><thead><tr><th>Data</th><th>Título</th><th>Local</th><th>Publicado</th>${pode?'<th>Ação</th>':''}</tr></thead><tbody>${(data||[]).map(r=>`<tr><td>${fmtData(r.data)}</td><td>${escaparSistema(r.titulo)}</td><td>${escaparSistema(r.local||'-')}</td><td>${r.publicado?'Sim':'Não'}</td>${pode?`<td><button type="button" class="sistema-btn sec" onclick="editarEvento('${r.id}')">EDITAR</button></td>`:''}</tr>`).join('')}</tbody></table></div></div>`}
+        async function salvarEvento(e){e.preventDefault();if(!exigirBanco())return;let imagem_url=null;const file=evFoto.files[0];if(file){const ext=(file.name.split('.').pop()||'jpg').toLowerCase();const path=`${Date.now()}-${crypto.randomUUID()}.${ext}`;const up=await bancoIgreja.storage.from('eventos').upload(path,file,{upsert:false});if(up.error){const m=document.getElementById('msgEv');m.classList.add('show');m.textContent='Falha ao enviar imagem: '+up.error.message;return}imagem_url=bancoIgreja.storage.from('eventos').getPublicUrl(path).data.publicUrl}const payload={titulo:evTitulo.value.trim(),data:evData.value,horario:evHora.value||null,local:evLocal.value.trim()||null,descricao:evDescricao.value.trim()||null,imagem_url,publicado:evPublicado.checked,criado_por:usuarioIgreja.id};const {error}=await bancoIgreja.from('eventos').insert(payload);const m=document.getElementById('msgEv');m.classList.add('show');m.textContent=error?'Erro: '+error.message:'Evento gravado no banco online.';if(!error){e.target.reset();setTimeout(()=>painelEventos(),500)}}
+        async function editarEvento(id){const el=document.getElementById('painelConteudo');const {data:r,error}=await bancoIgreja.from('eventos').select('*').eq('id',id).single();if(error){el.innerHTML='<p>Erro: '+escaparSistema(error.message)+'</p>';return}el.innerHTML=`<div class="sistema-card"><h3>EDITAR EVENTO</h3><form class="sistema-form" onsubmit="salvarEdicaoEvento(event,'${r.id}')"><div class="sistema-grid"><label>Título<input id="editEvTitulo" value="${escaparSistema(r.titulo||'')}" required></label><label>Data<input id="editEvData" type="date" value="${escaparSistema(r.data||'')}" required></label></div><div class="sistema-grid"><label>Horário<input id="editEvHora" type="time" value="${escaparSistema((r.horario||'').slice(0,5))}"></label><label>Local<input id="editEvLocal" value="${escaparSistema(r.local||'')}"></label></div><label>Descrição<textarea id="editEvDescricao">${escaparSistema(r.descricao||'')}</textarea></label><label>Substituir foto do evento<input id="editEvFoto" type="file" accept="image/*"></label><label><input id="editEvPublicado" type="checkbox" ${r.publicado?'checked':''} style="width:auto;margin-right:8px"> Publicar para visitantes</label><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="sistema-btn" type="submit">SALVAR ALTERAÇÕES</button><button class="sistema-btn sec" type="button" onclick="painelEventos()">CANCELAR</button></div><div id="msgEditEv" class="sistema-msg"></div></form></div>`}
+        async function salvarEdicaoEvento(e,id){e.preventDefault();const btn=e.submitter;btn.disabled=true;const payload={titulo:editEvTitulo.value.trim(),data:editEvData.value,horario:editEvHora.value||null,local:editEvLocal.value.trim()||null,descricao:editEvDescricao.value.trim()||null,publicado:editEvPublicado.checked};const file=editEvFoto.files[0];if(file){const ext=(file.name.split('.').pop()||'jpg').toLowerCase();const path=`${Date.now()}-${crypto.randomUUID()}.${ext}`;const up=await bancoIgreja.storage.from('eventos').upload(path,file,{upsert:false});if(up.error){const m=document.getElementById('msgEditEv');m.classList.add('show');m.textContent='Falha ao enviar imagem: '+up.error.message;btn.disabled=false;return}payload.imagem_url=bancoIgreja.storage.from('eventos').getPublicUrl(path).data.publicUrl}const {error}=await bancoIgreja.from('eventos').update(payload).eq('id',id);const m=document.getElementById('msgEditEv');m.classList.add('show');m.textContent=error?'Erro: '+error.message:'Evento atualizado com sucesso.';btn.disabled=false;if(!error)setTimeout(()=>painelEventos(),600)}
+
+        async function painelUsuarios(){const el=document.getElementById('painelConteudo');if(perfilIgreja.role!=='master'){el.innerHTML='<p>Acesso exclusivo do Master.</p>';return}const {data,error}=await bancoIgreja.from('profiles').select('*').order('nome');if(error){el.innerHTML='<p>'+escaparSistema(error.message)+'</p>';return}el.innerHTML=`<div class="sistema-card"><h3>USUÁRIOS E PERMISSÕES</h3><p style="margin-bottom:12px">Usuários devem existir no Supabase Auth. O Master pode definir o perfil operacional abaixo.</p><div class="tabela-wrap"><table class="tabela-sistema"><thead><tr><th>Nome</th><th>E-mail</th><th>Perfil</th><th>Ação</th></tr></thead><tbody>${(data||[]).map(r=>`<tr><td>${escaparSistema(r.nome||'-')}</td><td>${escaparSistema(r.email||'-')}</td><td><select id="role-${r.id}" style="background:#050505;color:#fff;padding:7px"><option ${r.role==='master'?'selected':''}>master</option><option ${r.role==='admin'?'selected':''}>admin</option><option ${r.role==='auxiliar'?'selected':''}>auxiliar</option><option ${r.role==='membro'?'selected':''}>membro</option></select></td><td><button class="sistema-btn" onclick="alterarRole('${r.id}')">SALVAR</button></td></tr>`).join('')}</tbody></table></div></div>`}
+        async function alterarRole(id){if(perfilIgreja.role!=='master')return;const role=document.getElementById('role-'+id).value;const {error}=await bancoIgreja.from('profiles').update({role}).eq('id',id);alert(error?'Erro: '+error.message:'Perfil atualizado no banco online.')}
+
+        async function painelRelatorios(){
+            const hoje=new Date().toISOString().slice(0,10), inicio=new Date(Date.now()-30*86400000).toISOString().slice(0,10);
+            document.getElementById('painelConteudo').innerHTML=`<div class="sistema-card"><h3>RELATÓRIOS DETALHADOS</h3><p>Consulte todos os registros do período. Pedidos de oração e dados pessoais aparecem somente para usuários autorizados.</p><div class="sistema-grid"><label>Data inicial<input id="relInicio" type="date" value="${inicio}"></label><label>Data final<input id="relFim" type="date" value="${hoje}"></label></div><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="sistema-btn" onclick="gerarRelatorioDetalhado()">GERAR RELATÓRIO</button><button class="sistema-btn sec" onclick="imprimirRelatorio()">IMPRIMIR / PDF</button><button class="sistema-btn sec" onclick="exportarRelatorioCSV()">EXPORTAR CSV</button></div><div id="relatorioResultado" style="margin-top:18px"></div></div>`;
+        }
+        let dadosRelatorioIgreja=[];
+        async function gerarRelatorioDetalhado(){
+            const ini=document.getElementById('relInicio').value, fim=document.getElementById('relFim').value;
+            const tabelas=[['visitantes','Visitantes'],['membros','Membros'],['eventos','Eventos'],['pedidos_oracao','Pedidos de oração'],['mensagens','Mensagens']];
+            const resultado=document.getElementById('relatorioResultado'); resultado.innerHTML='<p>Consultando o banco online...</p>'; dadosRelatorioIgreja=[];
+            for(const [tabela,titulo] of tabelas){
+                let q=bancoIgreja.from(tabela).select('*').order('created_at',{ascending:false});
+                if(ini)q=q.gte('created_at',ini+'T00:00:00'); if(fim)q=q.lte('created_at',fim+'T23:59:59.999');
+                const {data,error}=await q; dadosRelatorioIgreja.push({tabela,titulo,data:data||[],error});
+            }
+            resultado.innerHTML=`<div class="painel-kpis">${dadosRelatorioIgreja.map(g=>`<div class="kpi"><strong>${g.error?'—':g.data.length}</strong><span>${g.titulo}</span></div>`).join('')}</div>`+dadosRelatorioIgreja.map(g=>`<section class="sistema-card" style="margin-top:14px"><h3>${g.titulo}</h3>${g.error?`<p>Não foi possível consultar: ${escaparSistema(g.error.message)}</p>`:g.data.length?`<div class="tabela-wrap"><table class="tabela-sistema"><thead><tr><th>Data</th><th>Nome / título</th><th>Contato / status</th><th>Detalhes</th></tr></thead><tbody>${g.data.map(r=>`<tr><td>${fmtDataHora(r.created_at)}</td><td>${escaparSistema(r.nome||r.titulo||r.assunto||'-')}</td><td>${escaparSistema(r.telefone||r.email||r.status||'-')}</td><td>${escaparSistema(r.mensagem||r.pedido||r.descricao||r.observacoes||r.local||'-')}</td></tr>`).join('')}</tbody></table></div>`:'<p>Nenhum registro no período.</p>'}</section>`).join('');
+        }
+        function imprimirRelatorio(){const area=document.getElementById('relatorioResultado');if(!area||!area.innerHTML.trim())return alert('Gere o relatório primeiro.');const w=window.open('','_blank');w.document.write(`<html><head><title>Relatório - Igreja Peregrinos do Evangelho</title><style>body{font-family:Arial;padding:24px;color:#111}table{width:100%;border-collapse:collapse;margin-bottom:22px}th,td{border:1px solid #aaa;padding:7px;text-align:left;font-size:12px}h1,h3{color:#5b3b22}.painel-kpis{display:flex;gap:12px}.kpi{border:1px solid #aaa;padding:10px}</style></head><body><h1>Igreja Peregrinos do Evangelho</h1><p>Relatório gerado em ${new Date().toLocaleString('pt-BR')}</p>${area.innerHTML}</body></html>`);w.document.close();w.print()}
+        function exportarRelatorioCSV(){if(!dadosRelatorioIgreja.length)return alert('Gere o relatório primeiro.');const linhas=[['Categoria','Data','Nome/Título','Contato/Status','Detalhes']];dadosRelatorioIgreja.forEach(g=>g.data.forEach(r=>linhas.push([g.titulo,fmtDataHora(r.created_at),r.nome||r.titulo||r.assunto||'',r.telefone||r.email||r.status||'',r.mensagem||r.pedido||r.descricao||r.observacoes||r.local||''])));const csv='\ufeff'+linhas.map(l=>l.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(';')).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download='relatorio-igreja-'+new Date().toISOString().slice(0,10)+'.csv';a.click();URL.revokeObjectURL(a.href)}
+
+        async function salvarPedidoOracaoOnline(nome,pedido){if(!bancoIgreja)return {error:new Error('Banco não configurado')};return bancoIgreja.from('pedidos_oracao').insert({nome,pedido,privado:true})}
+
+        window.addEventListener('DOMContentLoaded',()=>{setTimeout(iniciarBancoIgreja,300)});
+
+        /* ==========================================================
+           PEDIDO DE ORAÇÃO
+           ========================================================== */
+
+        async function enviarPedidoOracao(event) {
+            event.preventDefault();
+            const nome=document.getElementById('nomeOracao').value.trim();
+            const pedido=document.getElementById('pedidoOracao').value.trim();
+            if(!nome||!pedido)return;
+            const msg=document.getElementById('mensagemOracao');
+            if(!bancoIgreja){msg.style.display='block';msg.textContent='O banco online ainda não está configurado. Nenhum registro local foi criado.';return;}
+            const {error}=await salvarPedidoOracaoOnline(nome,pedido);
+            msg.style.display='block';
+            msg.textContent=error?'Não foi possível registrar o pedido: '+error.message:'Seu pedido foi registrado com segurança no banco online da igreja.';
+            if(!error) event.target.reset();
+        }
+
+
+        /* ==========================================================
+           ESC / FECHAR MODAL
+           ========================================================== */
+
+        document.addEventListener(
+            'keydown',
+            event => {
+
+                if (event.key === 'Escape') {
+
+                    fecharApresentacao();
+
+                    fecharMenuMobile();
+
+                }
+
+                if (
+                    event.key === 'ArrowRight' &&
+                    overlay.classList.contains('aberto') &&
+                    dadosAtuais.length > 0
+                ) {
+
+                    proximoSlide();
+
+                }
+
+                if (
+                    event.key === 'ArrowLeft' &&
+                    overlay.classList.contains('aberto') &&
+                    dadosAtuais.length > 0
+                ) {
+
+                    slideAnterior();
+
+                }
+
+            }
+        );
+
+
+        /* ==========================================================
+           FECHAR CLICANDO FORA DO CARD
+           ========================================================== */
+
+        overlay.addEventListener(
+            'click',
+            event => {
+
+                if (
+                    event.target === overlay
+                ) {
+
+                    fecharApresentacao();
+
+                }
+
+            }
+        );
+
+    </script>
+
+</body>
+</html>
